@@ -1,0 +1,22 @@
+{
+	"name": "startkicker-web-client",
+	"version": "1.0.0",
+	"description": "Telerik Academy [ Web Services and Cloud ] - Teamwork Project",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Telerik-Team-Ares/Startkicker.git"
+	},
+	"author": "Team Ares",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Telerik-Team-Ares/Startkicker/issues"
+	},
+	"homepage": "https://github.com/Telerik-Team-Ares/Startkicker#readme",
+	"dependencies": {
+		"express": "^4.13.3"
+	}
+}

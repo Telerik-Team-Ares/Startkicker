@@ -1,0 +1,24 @@
+{
+	"name": "startkicker-web-client",
+	"description": "Telerik Academy [ Web Services and Cloud ] - Teamwork Project",
+	"main": "server.js",
+	"authors": [
+		"Team Ares"
+	],
+	"license": "MIT",
+	"moduleType": [],
+	"homepage": "https://github.com/Telerik-Team-Ares/Startkicker#readme",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"angular": "~1.4.7",
+		"angular-route": "~1.4.7",
+		"jquery": "~2.1.4",
+		"bootstrap": "~3.3.5"
+	}
+}
