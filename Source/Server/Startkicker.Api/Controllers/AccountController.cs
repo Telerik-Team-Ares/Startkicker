@@ -22,6 +22,7 @@
 
     using Startkicker.Api.Models.Request.Account;
     using Startkicker.Api.Models.Response.Account;
+    using System.Web.Http.Cors;
 
     [Authorize]
     [RoutePrefix("api/Account")]
@@ -325,6 +326,7 @@
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
+        [EnableCors("*", "*", "*")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
