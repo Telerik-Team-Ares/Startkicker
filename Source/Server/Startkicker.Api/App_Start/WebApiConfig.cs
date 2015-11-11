@@ -1,6 +1,8 @@
 ﻿namespace Startkicker.Api
 {
     using System.Web.Http;
+    using System.Web.Http.Cors;
+
     using Microsoft.Owin.Security.OAuth;
 
     public static class WebApiConfig
@@ -9,7 +11,8 @@
         {
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
-            config.EnableCors();
+            var corsAttribut = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(corsAttribut);
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
