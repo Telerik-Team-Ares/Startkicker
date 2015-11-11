@@ -15,10 +15,13 @@
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.OAuth;
     using Models;
-    using Startkicker.Api.Models.Account;
+
     using Startkicker.Api.Providers;
     using Startkicker.Api.Results;
     using Data.Models;
+
+    using Startkicker.Api.Models.Request.Account;
+    using Startkicker.Api.Models.Response.Account;
 
     [Authorize]
     [RoutePrefix("api/Account")]
@@ -329,7 +332,7 @@
                 return BadRequest(ModelState);
             }
 
-            var user = new User() { UserName = model.Email, Email = model.Email };
+            var user = new User() { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
