@@ -15,6 +15,11 @@
 				templateUrl: 'templates/home.html',
 				controller: 'HomeController',
 				controllerAs: 'vm',
+			})
+			.when('/register', {
+				templateUrl: 'templates/register.html',
+				controller: 'RegisterController',
+				controllerAs: 'vm',
 			});
 	}
 }());
