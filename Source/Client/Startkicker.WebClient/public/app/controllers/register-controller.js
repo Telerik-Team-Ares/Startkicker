@@ -5,14 +5,21 @@
 		.module('Startkicker.controllers')
 		.controller('RegisterController', homeController);
 
-	homeController.$inject = [];
+	homeController.$inject = ['auth'];
 
-	function homeController() {
+	function homeController(auth) {
 		var vm = this;
 
-		vm.user = {};
+		vm.user = {
+			email: 'pesho@pesho.com',
+			password: '1234567',
+			confirmPassword: '1234567',
+			firstName: 'Pesho',
+			lastName: 'Ivanov'
+		};
+
 		vm.register = function(user) {
-			console.log(user);
+			auth.registerUser(user);
 		};
 	}
 }());

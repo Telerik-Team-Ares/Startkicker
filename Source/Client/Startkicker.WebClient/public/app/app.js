@@ -2,10 +2,12 @@
 	'use strict';
 
 	angular.module('Startkicker.controllers', []);
+	angular.module('Startkicker.services', []);
 
 	angular
-		.module('Startkicker', ['ngRoute', 'Startkicker.controllers'])
-		.config(routesConfig);
+		.module('Startkicker', ['ngRoute', 'Startkicker.controllers', 'Startkicker.services'])
+		.config(routesConfig)
+		.constant('ServerBaseUrl', 'http://localhost:1234');
 
 	routesConfig.$inject = ['$routeProvider'];
 
