@@ -12,9 +12,12 @@
     {
         private ICollection<Project> projects;
 
+        private ICollection<Project> innovationProjects;
+
         public User()
         {
             this.projects = new HashSet<Project>();
+            this.innovationProjects = new HashSet<Project>();
         }
 
         [Required]
@@ -27,7 +30,20 @@
         [MinLength(2)]
         public string LastName { get; set; }
 
-        public virtual ICollection<Project> Projects
+        public virtual ICollection<Project> InnovationProjects
+        {
+            get
+            {
+                return this.innovationProjects;
+            }
+
+            set
+            {
+                this.innovationProjects = value;
+            }
+        }
+
+        public virtual ICollection<Project> ContributionProjects
         {
             get
             {
