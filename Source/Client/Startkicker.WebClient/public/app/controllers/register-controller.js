@@ -3,23 +3,26 @@
 
 	angular
 		.module('Startkicker.controllers')
-		.controller('RegisterController', homeController);
+		.controller('RegisterController', registerController);
 
-	homeController.$inject = ['auth'];
+	registerController.$inject = ['$location', 'auth', 'notifier'];
 
-	function homeController(auth) {
+	function registerController($location, auth, notifier) {
 		var vm = this;
 
-		vm.user = {
-			email: 'pesho@pesho.com',
-			password: '1234567',
-			confirmPassword: '1234567',
-			firstName: 'Pesho',
-			lastName: 'Ivanov'
-		};
+		vm.user = {};
 
 		vm.register = function(user) {
-			auth.registerUser(user);
+			auth
+				.registerUser(user)
+				.then(function() {
+					$location.path('/');
+					notifier.success('Registration successfully!');
+				});
+		};
+
+		vm.cancelRegister = function() {
+			$location.path('/');
 		};
 	}
 }());

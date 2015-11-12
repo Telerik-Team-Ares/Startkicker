@@ -5,21 +5,61 @@
 		<title>Startkicker</title>
 		<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
 		<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap-theme.css">
+		<link rel="stylesheet" href="lib/toastr/toastr.css">
 		<link rel="stylesheet" href="app/styles/app.css">
 	</head>
-	<body ng-app="Startkicker" ng-coack>
+	<body ng-app="Startkicker" ng-controller="LayoutController as vm" class="ng-cloak">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Startkicker</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="#/projects">Projects</a></li>
+					</ul>
+					<ul ng-hide="vm.hasLoggedUser" class="nav navbar-nav navbar-right">
+						<li><a href="#/login"><span class="glyphicon glyphicon-log-in"></span>  Login</a></li>
+						<li><a href="#/register"><span class="glyphicon glyphicon-edit"></span>  Register</a></li>
+					</ul>
+					<ul ng-show="vm.hasLoggedUser" class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>  {{ vm.loggedUser }}<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li ng-click="vm.logout()"><a href=""><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 		<div ng-view class="container"></div>
+		<hr>
+		<footer class="text-center">
+			<small>Team Ares - Telerik Academy 2015</small>
+		</footer>
 		<!-- libs -->
 		<script src="lib/jquery/dist/jquery.js"></script>
 		<script src="lib/angular/angular.js"></script>
 		<script src="lib/angular-route/angular-route.js"></script>
 		<script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="lib/toastr/toastr.js"></script>
 		<!-- app main -->
 		<script src="app/app.js"></script>
 		<!-- controllers -->
+		<script src="app/controllers/layout-controller.js"></script>
 		<script src="app/controllers/home-controller.js"></script>
 		<script src="app/controllers/register-controller.js"></script>
+		<script src="app/controllers/login-controller.js"></script>
 		<!-- services -->
 		<script src="app/services/auth-service.js"></script>
+		<script src="app/services/identity-service.js"></script>
+		<script src="app/services/notifier-service.js"></script>
 	</body>
 </html>

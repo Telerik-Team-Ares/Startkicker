@@ -7,7 +7,9 @@
 	angular
 		.module('Startkicker', ['ngRoute', 'Startkicker.controllers', 'Startkicker.services'])
 		.config(routesConfig)
-		.constant('ServerBaseUrl', 'http://localhost:1234');
+		.value('toastr', toastr)
+		.constant('BaseUrl', 'http://localhost:50777')
+		.constant('ApiBaseUrl', 'http://localhost:50777/api');
 
 	routesConfig.$inject = ['$routeProvider'];
 
@@ -22,6 +24,12 @@
 				templateUrl: 'templates/register.html',
 				controller: 'RegisterController',
 				controllerAs: 'vm',
-			});
+			})
+			.when('/login', {
+				templateUrl: 'templates/login.html',
+				controller: 'LoginController',
+				controllerAs: 'vm',
+			})
+			.otherwise({ redirectTo: '/' });
 	}
 }());

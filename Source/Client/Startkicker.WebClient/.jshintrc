@@ -15,5 +15,9 @@
 	"strict": true,
 	"validthis": true,
 	"latedef": false,
-  	"globals": { "angular": false }
+	"globals": {
+		"angular": false,
+		"localStorage": false,
+		"toastr": false
+	}
 }
