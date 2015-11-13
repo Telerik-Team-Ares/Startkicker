@@ -10,13 +10,13 @@
 
     public class User : IdentityUser
     {
-        private ICollection<Project> projects;
+        private ICollection<ContributorsForProjects> contributionProjects;
 
         private ICollection<Project> innovationProjects;
 
         public User()
         {
-            this.projects = new HashSet<Project>();
+            this.contributionProjects = new HashSet<ContributorsForProjects>();
             this.innovationProjects = new HashSet<Project>();
         }
 
@@ -43,16 +43,16 @@
             }
         }
 
-        public virtual ICollection<Project> ContributionProjects
+        public virtual ICollection<ContributorsForProjects> ContributionProjects
         {
             get
             {
-                return this.projects;
+                return this.contributionProjects;
             }
 
             set
             {
-                this.projects = value;
+                this.contributionProjects = value;
             }
         }
 

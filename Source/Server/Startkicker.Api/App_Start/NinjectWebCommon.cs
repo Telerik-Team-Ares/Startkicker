@@ -9,7 +9,11 @@ namespace Startkicker.Api.App_Start
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
+    using Ninject.Extensions.Conventions;
     using Ninject.Web.Common;
+
+    using Startkicker.Data;
+    using Startkicker.Data.Repositories;
 
     public static class NinjectWebCommon 
     {
@@ -61,6 +65,16 @@ namespace Startkicker.Api.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel
+                .Bind<IStartkickerDbContext>()
+                .To<StartkickerDbContext>()
+                .InRequestScope();
+
+            kernel.Bind(typeof(IRepository<>)).To(typeof(EfGenericRepository<>));
+
+            kernel.Bind(b => b.From("Startkicker.Services.Data")
+                .SelectAllClasses()
+                .BindDefaultInterface());
         }        
     }
 }

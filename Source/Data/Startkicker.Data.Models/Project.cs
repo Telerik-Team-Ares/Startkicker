@@ -10,13 +10,13 @@
 
     public class Project
     {
-        private ICollection<User> contributors;
+        private ICollection<ContributorsForProjects> contributors;
 
         private ICollection<Image> images;
 
         public Project()
         {
-            this.contributors = new HashSet<User>();
+            this.contributors = new HashSet<ContributorsForProjects>();
             this.images = new HashSet<Image>();
         }
 
@@ -26,6 +26,7 @@
         [Index]
         [MaxLength(200)]
         [MinLength(5)]
+        [Index(IsUnique = true)]
         public string Name { get; set; }
 
         [Required]
@@ -37,23 +38,26 @@
 
         [Required]
         [MaxLength(1000)]
+        [MinLength(20)]
         public string Description { get; set; }
 
         [Column(TypeName = "Money")]
-        [Range(0, double.MaxValue)]
-        public double CollectedMoney { get; set; }
+        [Range(0, int.MaxValue)]
+        public int CollectedMoney { get; set; }
 
         [Required]
         [Column(TypeName = "Money")]
-        [Range(0, double.MaxValue)]
-        public double GoalMoney { get; set; }
+        [Range(0, int.MaxValue)]
+        public int GoalMoney { get; set; }
 
         public int CategoryId { get; set; }
 
         [ForeignKey("Innovator")]
-        public int InnovatorId { get; set; }
+        public string InnovatorId { get; set; }
 
         public virtual User Innovator { get; set; }
+
+        public virtual Category Category { get; set; }
 
         public virtual ICollection<Image> Images
         {
@@ -68,7 +72,7 @@
             }
         }
 
-        public virtual ICollection<User> Contributors
+        public virtual ICollection<ContributorsForProjects> Contributors
         {
             get
             {
@@ -80,7 +84,5 @@
                 this.contributors = value;
             }
         }
-
-        public virtual Category Category { get; set; }
     }
 }
