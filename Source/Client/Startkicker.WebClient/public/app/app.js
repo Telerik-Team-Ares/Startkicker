@@ -30,6 +30,11 @@
 				controller: 'LoginController',
 				controllerAs: 'vm',
 			})
+			.when('/projects/add', {
+				templateUrl: 'templates/projects-add.html',
+				controller: 'AddProjectController',
+				controllerAs: 'vm',
+			})
 			.otherwise({ redirectTo: '/' });
 	}
 }());
