@@ -16,6 +16,8 @@
 
         public virtual IDbSet<ContributorsForProjects> ContributorsForProjects { get; set; }
 
+        public virtual IDbSet<Donation> Donations { get; set; }
+
         public virtual IDbSet<Category> Categories { get; set; }
 
         public virtual IDbSet<Image> Images { get; set; }

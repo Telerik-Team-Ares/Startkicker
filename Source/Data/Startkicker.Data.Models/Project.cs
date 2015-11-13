@@ -14,10 +14,13 @@
 
         private ICollection<Image> images;
 
+        private ICollection<Donation> donations;
+
         public Project()
         {
             this.contributors = new HashSet<ContributorsForProjects>();
             this.images = new HashSet<Image>();
+            this.donations = new HashSet<Donation>();
         }
 
         public int Id { get; set; }
@@ -82,6 +85,19 @@
             set
             {
                 this.contributors = value;
+            }
+        }
+
+        public virtual ICollection<Donation> Donations
+        {
+            get
+            {
+                return this.donations;
+            }
+
+            set
+            {
+                this.donations = value;
             }
         }
     }
