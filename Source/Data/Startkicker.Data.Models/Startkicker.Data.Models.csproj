@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="ContributorsForProjects.cs" />
+    <Compile Include="Donation.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
