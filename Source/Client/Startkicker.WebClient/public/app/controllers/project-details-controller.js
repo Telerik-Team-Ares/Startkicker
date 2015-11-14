@@ -17,9 +17,11 @@
 				.getProjectDetails(vm.project.id)
 				.then(function(response) {
 					console.log(response);
-					vm.project.name = response.name;
+					vm.project = response;
 					//$location.path('/');
 					notifier.success('Project details successfully get!');
+				},function(error){
+					console.log(error);
 				});
 		};
 	}

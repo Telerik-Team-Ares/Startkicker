@@ -18,7 +18,13 @@
 				.then(function() {
 					$location.path('/');
 					notifier.success('New project added success!');
-				});
+				},
+				function (error) {
+					console.log(error);
+					error.data.modelState
+				}
+
+			);
 		};
 	}
 }());
