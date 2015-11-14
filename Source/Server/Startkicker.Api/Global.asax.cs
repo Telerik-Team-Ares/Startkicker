@@ -8,6 +8,7 @@
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             DatabaseConfig.Initialize();
+            JsonResultConfig.CemalCaseConfig();
         }
     }
 }

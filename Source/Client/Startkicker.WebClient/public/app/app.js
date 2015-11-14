@@ -35,6 +35,11 @@
 				controller: 'AddProjectController',
 				controllerAs: 'vm',
 			})
+			.when('/projects/details', {
+				templateUrl: 'templates/project-details.html',
+				controller: 'ProjectDetailsController',
+				controllerAs: 'vm',
+			})
 			.otherwise({ redirectTo: '/' });
 	}
 }());
