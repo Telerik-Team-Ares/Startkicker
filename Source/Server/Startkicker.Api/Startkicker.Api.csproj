@@ -210,6 +210,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -223,11 +224,13 @@
     <Compile Include="Models\Request\Account\RegisterExternalBindingModel.cs" />
     <Compile Include="Models\Request\Account\RemoveLoginBindingModel.cs" />
     <Compile Include="Models\Request\Account\SetPasswordBindingModel.cs" />
+    <Compile Include="Models\Request\Categories\NewCategoryRequestModel.cs" />
     <Compile Include="Models\Request\Projects\NewProjectRequestModel.cs" />
     <Compile Include="Models\Response\Account\ExternalLoginViewModel.cs" />
     <Compile Include="Models\Response\Account\ManageInfoViewModel.cs" />
     <Compile Include="Models\Response\Account\UserInfoViewModel.cs" />
     <Compile Include="Models\Response\Account\UserLoginInfoViewModel.cs" />
+    <Compile Include="Models\Response\Categories\CategoryDescriptionResponseModel.cs" />
     <Compile Include="Models\Response\Projects\ProjectDescriptionResponseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
