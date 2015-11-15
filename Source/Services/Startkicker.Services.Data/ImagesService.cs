@@ -21,6 +21,36 @@
             this.imagesRepo = imagesRepo;
         }
 
+        public Image GetById(int id)
+        {
+            Image result = this.imagesRepo.GetById(id);
+            if (result != null && !result.IsRemoved)
+            {
+                return result;
+            }
+
+            return null;
+        }
+
+        public void Add(Image image)
+        {
+            this.imagesRepo.Add(image);
+            this.imagesRepo.SaveChanges();
+        }
+
+        public void Update(Image image)
+        {
+            this.imagesRepo.Update(image);
+            this.imagesRepo.SaveChanges();
+        }
+
+        public void Remove(Image image)
+        {
+            image.IsRemoved = true;
+            this.imagesRepo.Update(image);
+            this.imagesRepo.SaveChanges();
+
+        }
         public async Task<string> UploadAsync(Stream stream)
         {
             string guid = Guid.NewGuid().ToString();
@@ -32,7 +62,8 @@
             {
                 var image = await dbx.Files.UploadAsync(new CommitInfo(imageUrl), stream);
                 var shareLink = await dbx.Sharing.CreateSharedLinkAsync(image.PathLower);
-                return ProcessImageLink(shareLink.Url);
+                var rawLink = ProcessImageLink(shareLink.Url);
+                return rawLink;
             }
         }
 
