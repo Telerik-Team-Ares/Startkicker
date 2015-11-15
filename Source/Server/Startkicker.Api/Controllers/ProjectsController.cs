@@ -1,6 +1,8 @@
 ﻿namespace Startkicker.Api.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -9,6 +11,7 @@
     using Microsoft.AspNet.Identity;
 
     using Startkicker.Api.Infrastructure.ActionFilters;
+    using Startkicker.Api.Infrastructure.Helpers;
     using Startkicker.Api.Models.Request.Projects;
     using Startkicker.Api.Models.Response.Projects;
     using Startkicker.Data.Models;
@@ -24,10 +27,13 @@
         }
 
         [HttpGet]
-        // [Authorize]
-        public IHttpActionResult GetById(int id)
+        //[Authorize]
+        [EncryptResultIds]
+        [DecryptInputId]
+        public IHttpActionResult GetById(string id)
         {
-            Project projectDataModel = this.projects.GetById(id);
+            int idTo = int.Parse(id);
+            Project projectDataModel = this.projects.GetById(idTo);
             if (projectDataModel != null)
             {
                 ProjectDescriptionResponseModel result = new ProjectDescriptionResponseModel
@@ -39,9 +45,11 @@
                     Description = projectDataModel.Description,
                     EstimatedDate = projectDataModel.EstimatedDate,
                     GoalMoney = projectDataModel.GoalMoney,
+                    InnovatorId = "2",
                     //Innovator = projectDataModel.Innovator.UserName,
                     IsClosed = projectDataModel.IsClosed,
                 };
+              
                 return this.Ok(result);
             }
 
@@ -51,7 +59,7 @@
         [HttpPost]
         [ValidateModelState]
         [CheckModelForNull]
-        //[Authorize]
+        [Authorize]
         public IHttpActionResult Add(NewProjectRequestModel projectModel)
         {
             this.projects.Add(

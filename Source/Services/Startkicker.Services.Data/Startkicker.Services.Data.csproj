@@ -70,6 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriesService.cs" />
+    <Compile Include="Contracts\ICategoriesService.cs" />
     <Compile Include="Contracts\IImagesService.cs" />
     <Compile Include="Contracts\IProjectsService.cs" />
     <Compile Include="ImagesService.cs" />
