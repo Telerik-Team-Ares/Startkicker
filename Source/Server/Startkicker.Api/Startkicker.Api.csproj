@@ -239,6 +239,7 @@
     <Compile Include="Common\StringCipherEncrypter.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -255,6 +256,7 @@
     <Compile Include="Models\Request\Account\RemoveLoginBindingModel.cs" />
     <Compile Include="Models\Request\Account\SetPasswordBindingModel.cs" />
     <Compile Include="Models\Request\Categories\NewCategoryRequestModel.cs" />
+    <Compile Include="Models\Request\Images\NewImagesRequestModel.cs" />
     <Compile Include="Models\Request\Projects\NewProjectRequestModel.cs" />
     <Compile Include="Models\Response\Account\ExternalLoginViewModel.cs" />
     <Compile Include="Models\Response\Account\ManageInfoViewModel.cs" />
