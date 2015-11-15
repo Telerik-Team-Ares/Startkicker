@@ -24,7 +24,7 @@
         }
 
         [HttpGet]
-        // [Authorize]
+        [Authorize]
         public IHttpActionResult GetById(int id)
         {
             Project projectDataModel = this.projects.GetById(id);
@@ -51,7 +51,7 @@
         [HttpPost]
         [ValidateModelState]
         [CheckModelForNull]
-        //[Authorize]
+        [Authorize]
         public IHttpActionResult Add(NewProjectRequestModel projectModel)
         {
             this.projects.Add(
