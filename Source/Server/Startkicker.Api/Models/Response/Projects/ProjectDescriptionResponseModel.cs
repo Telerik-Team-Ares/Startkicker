@@ -19,7 +19,7 @@
 
         public int GoalMoney { get; set; }
 
-        public int InnovatorId { get; set; }
+        public string InnovatorId { get; set; }
 
         public string Innovator { get; set; }
 

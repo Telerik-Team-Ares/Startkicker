@@ -209,6 +209,8 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\IEncrypter.cs" />
+    <Compile Include="Common\StringCipherEncrypter.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -217,6 +219,8 @@
     </Compile>
     <Compile Include="Infrastructure\ActionFilters\CheckModelForNullAttribute.cs" />
     <Compile Include="Infrastructure\ActionFilters\ValidateModelStateAttribute.cs" />
+    <Compile Include="Infrastructure\Helpers\DecryptInputIdAttribute.cs" />
+    <Compile Include="Infrastructure\Helpers\EncryptResultIdsAttribute.cs" />
     <Compile Include="Models\Request\Account\AddExternalLoginBindingModel.cs" />
     <Compile Include="Models\Request\Account\ChangePasswordBindingModel.cs" />
     <Compile Include="Models\Request\Account\RegisterBindingModel.cs" />
