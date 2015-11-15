@@ -18,7 +18,9 @@
 		}
 
 		function all(errorResponse){
-			var i =0;
+			var i =1;
+			notifier.error(errorResponse.data.message)
+			console.log(errorResponse.data.message)
 			for (var key in errorResponse.data.modelState) {
 				if (errorResponse.data.modelState.hasOwnProperty(key)) {
 					var obj = errorResponse.data.modelState[key];

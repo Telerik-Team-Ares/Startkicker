@@ -5,9 +5,9 @@
 		.module('Startkicker.controllers')
 		.controller('ProjectDetailsController', detailsProjectController);
 
-	detailsProjectController.$inject = ['$location', 'projects', 'notifier'];
+	detailsProjectController.$inject = ['$location', 'projects', 'notifier','showServerErrors'];
 
-	function detailsProjectController($location, projects, notifier) {
+	function detailsProjectController($location, projects, notifier, showServerErrors) {
 		var vm = this;
 
 		vm.project = {name:''};
@@ -22,6 +22,7 @@
 					notifier.success('Project details successfully get!');
 				},function(error){
 					console.log(error);
+					showServerErrors.all(error);
 				});
 		};
 	}

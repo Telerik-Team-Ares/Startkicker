@@ -13,7 +13,7 @@
 		vm.user = {};
 
 		vm.login = function(user) {
-			auth
+				auth
 				.loginUser(user)
 				.then(function() {
 					$scope.$emit('userLoggedIn', user.username);

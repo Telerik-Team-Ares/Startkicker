@@ -38,6 +38,7 @@
 
 					identity.saveLoggedUser(loggedUser);
 					deferred.resolve(loggedUser);
+					$http.defaults.headers.common.Authorization = 'Bearer ' + identity.getAccessToken();
 				}, function(err) {
 					deferred.reject(err);
 				});
@@ -47,6 +48,7 @@
 
 		function logoutUser() {
 			identity.removeLoggedUser();
+			$http.defaults.headers.common.Authorization = '';
 		}
 
 		return {
