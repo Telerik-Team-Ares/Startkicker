@@ -3,6 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNet.Identity;
@@ -32,6 +33,10 @@
         [MaxLength(50)]
         [MinLength(2)]
         public string LastName { get; set; }
+
+        [Range(0, int.MaxValue)]
+        [Column(TypeName = "Money")]
+        public int MoneyAmount { get; set; }
 
         public virtual ICollection<Project> InnovationProjects
         {

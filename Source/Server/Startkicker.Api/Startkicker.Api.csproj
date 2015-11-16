@@ -257,6 +257,7 @@
     <Compile Include="Models\Request\Account\SetPasswordBindingModel.cs" />
     <Compile Include="Models\Request\Categories\NewCategoryRequestModel.cs" />
     <Compile Include="Models\Request\Images\NewImagesRequestModel.cs" />
+    <Compile Include="Models\Request\Projects\AddProjectMoneyRequestModel.cs" />
     <Compile Include="Models\Request\Projects\NewProjectRequestModel.cs" />
     <Compile Include="Models\Response\Account\ExternalLoginViewModel.cs" />
     <Compile Include="Models\Response\Account\ManageInfoViewModel.cs" />

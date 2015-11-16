@@ -1,6 +1,8 @@
 ﻿namespace Startkicker.Api.Infrastructure.Helpers
 {
+    using System;
     using System.Linq;
+    using System.Net.Http;
     using System.Security.Cryptography;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
@@ -26,11 +28,28 @@
         {
             var arguments = actionContext.ActionArguments;
 
-            var keys = arguments.Keys.Where(x => x == "id" || x.EndsWith("Id")).ToList();
-
-            foreach (var key in keys)
+            foreach (var argument in arguments)
             {
-                arguments[key] = this.encrypter.Decrypt(arguments[key].ToString());
+                if (!argument.Value.GetType().IsValueType && (argument.Value.GetType().Name != typeof(string).Name))
+                {
+                    var objectContent = argument.Value;
+
+                    var props =
+                        objectContent.GetType().GetProperties().Where(x => x.Name.EndsWith("id") || x.Name.EndsWith("Id"));
+
+                    foreach (var propertyInfo in props)
+                    {
+                        propertyInfo.SetValue(
+                            objectContent,
+                            this.encrypter.Decrypt(propertyInfo.GetValue(objectContent, null).ToString()));
+                    }
+                }
+                else
+                if (argument.Key == "id" || argument.Key.EndsWith("Id"))
+                {
+                    var key = argument.Key;
+                    arguments[key] = this.encrypter.Decrypt(arguments[key].ToString());
+                }
             }
         }
     }

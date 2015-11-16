@@ -21,19 +21,24 @@
 
     using WebGrease.Css.Extensions;
 
+    [RoutePrefix("api/Projects")]
     public class ProjectsController : ApiController
     {
         private readonly IProjectsService projects;
 
-        public ProjectsController(IProjectsService projects)
+        private readonly IUsersService users;
+
+        public ProjectsController(IProjectsService projects, IUsersService users)
         {
             this.projects = projects;
+            this.users = users;
         }
 
+        [Route("GetById")]
         [HttpGet]
         //[Authorize]
         [EncryptResultIds]
-        //[DecryptInputId]
+        [DecryptInputId]
         //[Route("projects/getById/{id}")]
         public IHttpActionResult GetById(string id)
         {
@@ -43,16 +48,36 @@
             {
                 ProjectDescriptionResponseModel result = new ProjectDescriptionResponseModel
                 {
-                    CategoryName = projectDataModel.Category.Name,
-                    Name = projectDataModel.Name,
-                    CollectedMoney = projectDataModel.CollectedMoney,
-                    Contributors = projectDataModel.Contributors.Select(x => x.User.UserName).ToList<string>(),
-                    Description = projectDataModel.Description,
-                    EstimatedDate = projectDataModel.EstimatedDate,
-                    GoalMoney = projectDataModel.GoalMoney,
+                    CategoryName =
+                                                                     projectDataModel
+                                                                     .Category.Name,
+                    Name =
+                                                                     projectDataModel
+                                                                     .Name,
+                    CollectedMoney =
+                                                                     projectDataModel
+                                                                     .CollectedMoney,
+                    Contributors =
+                                                                     projectDataModel
+                                                                     .Contributors
+                                                                     .Select(
+                                                                         x =>
+                                                                         x.User.UserName)
+                                                                     .ToList<string>(),
+                    Description =
+                                                                     projectDataModel
+                                                                     .Description,
+                    EstimatedDate =
+                                                                     projectDataModel
+                                                                     .EstimatedDate,
+                    GoalMoney =
+                                                                     projectDataModel
+                                                                     .GoalMoney,
                     InnovatorId = "2",
                     //Innovator = projectDataModel.Innovator.UserName,
-                    IsClosed = projectDataModel.IsClosed,
+                    IsClosed =
+                                                                     projectDataModel
+                                                                     .IsClosed,
                 };
 
                 return this.Ok(result);
@@ -61,6 +86,7 @@
             return this.BadRequest("Project was not found!");
         }
 
+        [Route("Add")]
         [HttpPost]
         [ValidateModelState]
         [CheckModelForNull]
@@ -84,22 +110,53 @@
             return this.Ok();
         }
 
+        [Route("GetAll")]
         [HttpGet]
         [ValidateModelState]
         [EncryptResultIds]
-      //  [Route("projects/getAll")]
+        //  [Route("projects/getAll")]
         public IHttpActionResult GetAll(int page, int size)
         {
-            ICollection<ProjectListItemResponseModel> projectsList = this.projects.GetAll(page, size).Where(x => (!x.IsRemoved))
-                 .Select(y => new ProjectListItemResponseModel
-                 {
-                     Id = y.Id.ToString(),
-                     Name = y.Name,
-                     GoalMoney = y.GoalMoney,
-                     EstimatedDate = y.EstimatedDate
-                 }).ToList<ProjectListItemResponseModel>();
+            ICollection<ProjectListItemResponseModel> projectsList =
+                this.projects.GetAll(page, size)
+                    .Where(x => (!x.IsRemoved))
+                    .Select(
+                        y =>
+                        new ProjectListItemResponseModel
+                        {
+                            Id = y.Id.ToString(),
+                            Name = y.Name,
+                            GoalMoney = y.GoalMoney,
+                            EstimatedDate = y.EstimatedDate
+                        })
+                    .ToList<ProjectListItemResponseModel>();
 
             return this.Ok(projectsList);
+        }
+
+
+        [Route("ProjectAddMoney")]
+        //[Authorize]
+        [DecryptInputId]
+        [HttpPost]
+        [ValidateModelState]
+        [CheckModelForNull]
+        public IHttpActionResult AddMoney(AddProjectMoneyRequestModel moneyRequestModel)
+        {
+            string userId = this.User.Identity.GetUserId();
+
+            var result = this.projects.AddMoney(int.Parse(moneyRequestModel.Id), moneyRequestModel.MoneyAmount, userId);
+            if (result == 1)
+            {
+                return this.Ok("Your money support was verified!");
+            }
+
+            if (result == -1)
+            {
+                return this.BadRequest("You are not allowed for this opperation!");
+            }
+
+            return this.BadRequest("You have no enough money for this donation to be processed! Please chose available amount!");
         }
     }
 }

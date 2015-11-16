@@ -11,5 +11,7 @@
         public DateTime EstimatedDate { get; set; }
 
         public int GoalMoney { get; set; }
+
+        public int CollectedMoney { get; set; }
     }
 }

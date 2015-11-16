@@ -12,9 +12,12 @@
     {
         private readonly IRepository<Project> projectsPepo;
 
-        public ProjectsService(IRepository<Project> projectsRepo)
+        private readonly IRepository<User> usersRepo;
+
+        public ProjectsService(IRepository<Project> projectsRepo, IRepository<User> usersRepo)
         {
             this.projectsPepo = projectsRepo;
+            this.usersRepo = usersRepo;
         }
 
         public Project GetById(int id)
@@ -54,6 +57,39 @@
             project.IsRemoved = true;
             this.projectsPepo.Update(project);
             this.projectsPepo.SaveChanges();
+        }
+
+        public int AddMoney(int projectId, int amount, string userId)
+        {
+            User user = this.usersRepo.GetById(userId);
+
+            if (user == null)
+            {
+                return -1;
+            }
+            
+            if ((user.MoneyAmount - amount) < 0)
+            {
+                return 0;
+            }
+
+            Project projectToUpdate = this.projectsPepo.GetById(projectId);
+
+            if (projectToUpdate == null)
+            {
+                return -1;
+            }
+
+            projectToUpdate.CollectedMoney += amount;
+            this.projectsPepo.Update(projectToUpdate);
+
+            user.MoneyAmount -= amount;
+            this.usersRepo.Update(user);
+
+            this.projectsPepo.SaveChanges();
+            this.usersRepo.SaveChanges();
+
+            return 1;
         }
     }
 }

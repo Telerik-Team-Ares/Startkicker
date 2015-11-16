@@ -13,6 +13,8 @@
 
         void Add(Project project);
 
+        int AddMoney(int projectId, int amount, string userId);
+
         void Update(Project project);
 
         void Remove(Project project);

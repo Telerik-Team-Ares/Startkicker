@@ -45,7 +45,7 @@
                     }
                 }
                 else
-                if (type.BaseType.IsEquivalentTo(typeof(object)))
+                if ((!type.IsValueType) && (type.Name != typeof(string).Name))
                 {
                     var props = value.GetType().GetProperties().Where(x => x.Name.EndsWith("id") || x.Name.EndsWith("Id"));
 
