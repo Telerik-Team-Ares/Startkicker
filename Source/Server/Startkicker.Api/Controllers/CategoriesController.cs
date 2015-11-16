@@ -74,7 +74,7 @@
 
                     result.Add(categoryMapped);
                 }
-                
+
                 return this.Ok(result);
             }
 

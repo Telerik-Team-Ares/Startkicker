@@ -1,12 +1,10 @@
 ﻿namespace Startkicker.Services.Data
 {
-    using System;
-    using System.Collections.Generic;
+    using System.Linq;
 
     using Startkicker.Data.Models;
     using Startkicker.Data.Repositories;
     using Startkicker.Services.Data.Contracts;
-    using System.Linq;
 
     public class CategoriesService : ICategoriesService
     {
@@ -28,7 +26,7 @@
             return null;
         }
 
-        public IQueryable<Category> GetAll(int page=1,int pageSize = 10)
+        public IQueryable<Category> GetAll(int page = 1, int pageSize = 10)
         {
             return this.categoriesPepo
                 .All()
@@ -36,7 +34,6 @@
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize);
         }
-
 
         public int Add(Category category)
         {

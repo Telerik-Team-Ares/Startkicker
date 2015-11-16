@@ -6,9 +6,13 @@
     public interface ICategoriesService
     {
         int Add(Category category);
+
         IQueryable<Category> GetAll(int page = 1, int pageSize = 10);
+
         Category GetById(int id);
-        void Remove(Category Category);
+
+        void Remove(Category category);
+
         int Update(Category category);
     }
 }

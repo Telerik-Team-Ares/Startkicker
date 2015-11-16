@@ -36,7 +36,7 @@
                 {
                     foreach (var val in (value as ICollection))
                     {
-                        var props = val.GetType().GetProperties().Where(x => x.Name.EndsWith("id") || x.Name.EndsWith("Id"));
+                        var props = val.GetType().GetProperties().Where(x => x.Name.EndsWith("Id"));
 
                         foreach (var propertyInfo in props)
                         {

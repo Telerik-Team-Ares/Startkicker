@@ -26,7 +26,7 @@
         {
             var arguments = actionContext.ActionArguments;
 
-            var keys = arguments.Keys.Where(x => x.EndsWith("id") || x.EndsWith("Id")).ToList();
+            var keys = arguments.Keys.Where(x => x == "id" || x.EndsWith("Id")).ToList();
 
             foreach (var key in keys)
             {

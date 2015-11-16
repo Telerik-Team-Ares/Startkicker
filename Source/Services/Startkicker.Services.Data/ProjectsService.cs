@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Startkicker.Data.Models;
     using Startkicker.Data.Repositories;
@@ -25,6 +26,15 @@
             }
 
             return null;
+        }
+
+        public IQueryable<Project> GetAll(int page = 1, int pageSize = 10)
+        {
+            return this.projectsPepo
+                .All()
+                .OrderByDescending(c => c.Name)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
         }
 
         public void Add(Project project)

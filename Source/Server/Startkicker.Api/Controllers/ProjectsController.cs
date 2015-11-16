@@ -10,12 +10,16 @@
 
     using Microsoft.AspNet.Identity;
 
+    using Ninject.Infrastructure.Language;
+
     using Startkicker.Api.Infrastructure.ActionFilters;
     using Startkicker.Api.Infrastructure.Helpers;
     using Startkicker.Api.Models.Request.Projects;
     using Startkicker.Api.Models.Response.Projects;
     using Startkicker.Data.Models;
     using Startkicker.Services.Data.Contracts;
+
+    using WebGrease.Css.Extensions;
 
     public class ProjectsController : ApiController
     {
@@ -29,7 +33,8 @@
         [HttpGet]
         //[Authorize]
         [EncryptResultIds]
-        [DecryptInputId]
+        //[DecryptInputId]
+        //[Route("projects/getById/{id}")]
         public IHttpActionResult GetById(string id)
         {
             int idTo = int.Parse(id);
@@ -49,7 +54,7 @@
                     //Innovator = projectDataModel.Innovator.UserName,
                     IsClosed = projectDataModel.IsClosed,
                 };
-              
+
                 return this.Ok(result);
             }
 
@@ -77,6 +82,24 @@
                 });
 
             return this.Ok();
+        }
+
+        [HttpGet]
+        [ValidateModelState]
+        [EncryptResultIds]
+      //  [Route("projects/getAll")]
+        public IHttpActionResult GetAll(int page, int size)
+        {
+            ICollection<ProjectListItemResponseModel> projectsList = this.projects.GetAll(page, size).Where(x => (!x.IsRemoved))
+                 .Select(y => new ProjectListItemResponseModel
+                 {
+                     Id = y.Id.ToString(),
+                     Name = y.Name,
+                     GoalMoney = y.GoalMoney,
+                     EstimatedDate = y.EstimatedDate
+                 }).ToList<ProjectListItemResponseModel>();
+
+            return this.Ok(projectsList);
         }
     }
 }
