@@ -19,7 +19,7 @@
 
         public Project GetById(int id)
         {
-           Project result = this.projectsPepo.GetById(id);
+            Project result = this.projectsPepo.GetById(id);
             if (result != null && !result.IsRemoved)
             {
                 return result;

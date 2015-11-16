@@ -8,6 +8,8 @@
 
         public int ProjectId { get; set; }
 
+        public bool IsRemoved { get; set; }
+
         public virtual Project Project { get; set; }
     }
 }
