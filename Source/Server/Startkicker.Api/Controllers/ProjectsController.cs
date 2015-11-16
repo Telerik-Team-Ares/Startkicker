@@ -10,6 +10,7 @@
 
     using Microsoft.AspNet.Identity;
 
+    using Startkicker.Api.Common.Contracts;
     using Startkicker.Api.Infrastructure.ActionFilters;
     using Startkicker.Api.Infrastructure.Helpers;
     using Startkicker.Api.Models.Request.Projects;
@@ -20,10 +21,12 @@
     public class ProjectsController : ApiController
     {
         private readonly IProjectsService projects;
+        private readonly IPublisher publisher;
 
-        public ProjectsController(IProjectsService projects)
+        public ProjectsController(IProjectsService projects, IPublisher publisher)
         {
             this.projects = projects;
+            this.publisher = publisher;
         }
 
         [HttpGet]
@@ -75,6 +78,9 @@
                     InnovatorId = this.User.Identity.GetUserId(),
                     CategoryId = projectModel.CategoryId,
                 });
+
+            // TODO: Remove this (just for testing)
+            this.publisher.Emit("new-project-added", string.Format("New project was created!"));
 
             return this.Ok();
         }
