@@ -12,23 +12,25 @@ namespace Startkicker.Api.App_Start
     using Ninject.Extensions.Conventions;
     using Ninject.Web.Common;
 
+    using Startkicker.Api.Common;
+    using Startkicker.Api.Common.Contracts;
     using Startkicker.Data;
     using Startkicker.Data.Repositories;
 
-    public static class NinjectWebCommon 
+    public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start() 
+        public static void Start()
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
         }
-        
+
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -36,7 +38,7 @@ namespace Startkicker.Api.App_Start
         {
             bootstrapper.ShutDown();
         }
-        
+
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -65,16 +67,10 @@ namespace Startkicker.Api.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel
-                .Bind<IStartkickerDbContext>()
-                .To<StartkickerDbContext>()
-                .InRequestScope();
-
+            kernel.Bind<IStartkickerDbContext>().To<StartkickerDbContext>().InRequestScope();
             kernel.Bind(typeof(IRepository<>)).To(typeof(EfGenericRepository<>));
-
-            kernel.Bind(b => b.From("Startkicker.Services.Data")
-                .SelectAllClasses()
-                .BindDefaultInterface());
-        }        
+            kernel.Bind<IPublisher>().To<PubNubNotifier>().InSingletonScope();
+            kernel.Bind(b => b.From("Startkicker.Services.Data").SelectAllClasses().BindDefaultInterface());
+        }
     }
 }

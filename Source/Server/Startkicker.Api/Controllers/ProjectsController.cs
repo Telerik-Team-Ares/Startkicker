@@ -8,10 +8,10 @@
     using System.Net.Http;
     using System.Web.Http;
 
+    using Ninject.Infrastructure.Language;
     using Microsoft.AspNet.Identity;
 
-    using Ninject.Infrastructure.Language;
-
+    using Startkicker.Api.Common.Contracts;
     using Startkicker.Api.Infrastructure.ActionFilters;
     using Startkicker.Api.Infrastructure.Helpers;
     using Startkicker.Api.Models.Request.Projects;
@@ -25,13 +25,12 @@
     public class ProjectsController : ApiController
     {
         private readonly IProjectsService projects;
+        private readonly IPublisher publisher;
 
-        private readonly IUsersService users;
-
-        public ProjectsController(IProjectsService projects, IUsersService users)
+        public ProjectsController(IProjectsService projects, IPublisher publisher)
         {
             this.projects = projects;
-            this.users = users;
+            this.publisher = publisher;
         }
 
         [Route("GetById")]
@@ -106,6 +105,9 @@
                     InnovatorId = this.User.Identity.GetUserId(),
                     CategoryId = projectModel.CategoryId,
                 });
+
+            // TODO: Remove this (just for testing)
+            this.publisher.Emit("new-project-added", string.Format("New project was created!"));
 
             return this.Ok();
         }

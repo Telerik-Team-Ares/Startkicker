@@ -8,6 +8,7 @@
     using System.Web.Http.Filters;
 
     using Startkicker.Api.Common;
+    using Startkicker.Api.Common.Contracts;
 
     public class DecryptInputIdAttribute : ActionFilterAttribute
     {

@@ -1,4 +1,4 @@
-﻿namespace Startkicker.Api.Common
+﻿namespace Startkicker.Api.Common.Contracts
 {
     public interface IEncrypter
     {

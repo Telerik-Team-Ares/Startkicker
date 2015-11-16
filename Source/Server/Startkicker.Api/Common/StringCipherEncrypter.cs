@@ -5,7 +5,9 @@
     using System.Security.Cryptography;
     using System.Text;
 
-    public class StringCipherEncrypter:IEncrypter
+    using Startkicker.Api.Common.Contracts;
+
+    public class StringCipherEncrypter : IEncrypter
     {
         private const string passPhrase = "3dhfj754";
 
