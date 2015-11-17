@@ -38,7 +38,7 @@
 
 					identity.saveLoggedUser(loggedUser);
 					deferred.resolve(loggedUser);
-					$http.defaults.headers.common.Authorization = 'Bearer ' + identity.getAccessToken();
+					$http.defaults.headers.common.Authorization = 'Bearer ' + response.data.access_token;
 				}, function(err) {
 					deferred.reject(err);
 				});

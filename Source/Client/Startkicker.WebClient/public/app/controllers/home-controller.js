@@ -5,11 +5,15 @@
 		.module('Startkicker.controllers')
 		.controller('HomeController', homeController);
 
-	homeController.$inject = [];
+	homeController.$inject = ['projects'];
 
-	function homeController() {
+	function homeController(projects) {
 		var vm = this;
 
-		vm.name = 'Home';
+		projects
+			.getAll()
+			.then(function(response) {
+				vm.projects = response;
+			});
 	}
 }());
