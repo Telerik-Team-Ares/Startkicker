@@ -40,6 +40,7 @@
 				</div>
 			</div>
 		</nav>
+    	<div pub-key="pub-c-2dab3a26-3c7f-4957-8099-d8eb0354d373" sub-key="sub-c-0d5d244e-8b92-11e5-83e3-02ee2ddab7fe" ssl="off" origin="pubsub.pubnub.com" id="pubnub"></div>
 		<div ng-view class="container"></div>
 		<hr>
 		<footer class="text-center">
@@ -51,6 +52,7 @@
 		<script src="lib/angular-route/angular-route.js"></script>
 		<script src="lib/bootstrap/dist/js/bootstrap.js"></script>
 		<script src="lib/toastr/toastr.js"></script>
+		<script src=http://cdn.pubnub.com/pubnub-3.5.3.min.js></script>
 		<!-- app main -->
 		<script src="app/app.js"></script>
 		<!-- controllers -->
@@ -64,7 +66,18 @@
 		<script src="app/services/auth-service.js"></script>
 		<script src="app/services/identity-service.js"></script>
 		<script src="app/services/notifier-service.js"></script>
+		<script src="app/services/categories-service.js"></script>
 		<script src="app/services/projects-service.js"></script>
 		<script src="app/services/show-server-errors-service.js"></script>
+		<script>
+			(function() {
+            	PUBNUB.subscribe({
+                	channel: 'new-project-added',
+                	callback: function (message) {
+                   		toastr.success(message);
+                	}
+            	});
+        	}());
+		</script>
 	</body>
 </html>
