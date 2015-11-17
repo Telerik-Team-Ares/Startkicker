@@ -7,6 +7,7 @@
 	angular
 		.module('Startkicker', ['ngRoute', 'Startkicker.controllers', 'Startkicker.services'])
 		.config(routesConfig)
+		.run(['categories', cashCategories])
 		.value('toastr', toastr)
 		.constant('BaseUrl', 'http://localhost:50777')
 		.constant('ApiBaseUrl', 'http://localhost:50777/api');
@@ -41,5 +42,13 @@
 				controllerAs: 'vm',
 			})
 			.otherwise({ redirectTo: '/' });
+	}
+
+	function cashCategories(categories) {
+		categories
+			.getAll()
+			.then(function(response) {
+				localStorage.setItem('categories', response.data);
+			});
 	}
 }());
