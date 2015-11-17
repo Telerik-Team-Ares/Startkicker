@@ -8,10 +8,10 @@
 	categories.$inject = ['$http', '$q', 'ApiBaseUrl'];
 
 	function categories($http, $q, ApiBaseUrl) {
+		var url = ApiBaseUrl + '/categories';
 
 		function add(category) {
-			var url = ApiBaseUrl + '/categories',
-				deferred = $q.defer();
+			var deferred = $q.defer();
 
 			$http
 				.post(url, category)
@@ -25,8 +25,7 @@
 		}
 
 		function getAll() {
-			var url = ApiBaseUrl + '/categories',
-				deferred = $q.defer();
+			var deferred = $q.defer();
 
 			$http
 				.get(url)
@@ -39,9 +38,14 @@
 			return deferred.promise;
 		}
 
+		function getCachedCategories() {
+			return JSON.parse(localStorage.getItem('categories'));
+		}
+
 		return {
 			add: add,
-			getAll: getAll
+			getAll: getAll,
+			getCachedCategories: getCachedCategories
 		};
 	}
 }());
