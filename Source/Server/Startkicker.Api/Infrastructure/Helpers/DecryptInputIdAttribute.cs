@@ -15,7 +15,7 @@
         private readonly IEncrypter encrypter;
 
         public DecryptInputIdAttribute()
-            : this(new StringCipherEncrypter())
+            : this(new UrlIdEncoder())
         {
 
         }
@@ -29,11 +29,13 @@
         {
             var arguments = actionContext.ActionArguments;
 
-            foreach (var argument in arguments)
+            for (var i =0; i<arguments.Keys.Count;i++)//var argkKey in arguments.Keys)
             {
-                if (!argument.Value.GetType().IsValueType && (argument.Value.GetType().Name != typeof(string).Name))
+                var argkKey = arguments.Keys.ElementAt(i);
+                var argument = arguments[argkKey];
+                if (!argument.GetType().IsValueType && (argument.GetType().Name != typeof(string).Name))
                 {
-                    var objectContent = argument.Value;
+                    var objectContent = argument;
 
                     var props =
                         objectContent.GetType().GetProperties().Where(x => x.Name.EndsWith("id") || x.Name.EndsWith("Id"));
@@ -46,10 +48,10 @@
                     }
                 }
                 else
-                if (argument.Key == "id" || argument.Key.EndsWith("Id"))
+                if (argkKey == "id" || argkKey.EndsWith("Id"))
                 {
-                    var key = argument.Key;
-                    arguments[key] = this.encrypter.Decrypt(arguments[key].ToString());
+                   // var key = argument.Key;
+                    arguments[argkKey] = this.encrypter.Decrypt(arguments[argkKey].ToString());
                 }
             }
         }

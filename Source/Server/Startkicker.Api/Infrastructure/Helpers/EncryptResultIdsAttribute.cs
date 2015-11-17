@@ -14,7 +14,7 @@
         private readonly IEncrypter encrypter;
 
         public EncryptResultIdsAttribute()
-            : this(new StringCipherEncrypter())
+            : this(new UrlIdEncoder())
         {
 
         }

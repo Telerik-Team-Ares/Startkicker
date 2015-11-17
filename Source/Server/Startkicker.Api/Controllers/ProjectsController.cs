@@ -33,13 +33,13 @@
             this.publisher = publisher;
         }
 
+        [HttpGet]
         //[Route("GetById")]
         //[Authorize]
-        [EncryptResultIds]
-        [DecryptInputId]
+        //[DecryptInputId]
+        //[EncryptResultIds]
         //[Route("projects")]
-        [HttpGet]
-        public IHttpActionResult GetById([FromBody]string id)
+        public IHttpActionResult GetById(string id)
         {
             int idTo = int.Parse(id);
             Project projectDataModel = this.projects.GetById(idTo);
@@ -89,7 +89,8 @@
         [HttpPost]
         [ValidateModelState]
         [CheckModelForNull]
-        [Authorize]
+        //[DecryptInputId]
+        //[Authorize]
         public IHttpActionResult Add(NewProjectRequestModel projectModel)
         {
             this.projects.Add(
@@ -112,12 +113,11 @@
             return this.Ok();
         }
 
-        [Route("All")]
         [HttpGet]
         [ValidateModelState]
-        [EncryptResultIds]
+        // [EncryptResultIds]
         //  [Route("projects/getAll")]
-        public IHttpActionResult GetAll(int page, int size)
+        public IHttpActionResult GetAll(int page=1, int size=10)
         {
             ICollection<ProjectListItemResponseModel> projectsList =
                 this.projects.GetAll(page, size)
@@ -139,7 +139,7 @@
 
         //[Route("ProjectAddMoney")]
         //[Authorize]
-        [DecryptInputId]
+        //[DecryptInputId]
         [HttpPut]
         [ValidateModelState]
         [CheckModelForNull]
@@ -162,7 +162,8 @@
         }
 
         [HttpDelete]
-        public IHttpActionResult Remove([FromBody]string id)
+       // [DecryptInputId]
+        public IHttpActionResult Remove(string id)
         {
             int idToInt = int.Parse(id);
 
