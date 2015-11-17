@@ -33,13 +33,13 @@
             this.publisher = publisher;
         }
 
-        [Route("GetById")]
-        [HttpGet]
+        //[Route("GetById")]
         //[Authorize]
         [EncryptResultIds]
         [DecryptInputId]
-        //[Route("projects/getById/{id}")]
-        public IHttpActionResult GetById(string id)
+        //[Route("projects")]
+        [HttpGet]
+        public IHttpActionResult GetById([FromBody]string id)
         {
             int idTo = int.Parse(id);
             Project projectDataModel = this.projects.GetById(idTo);
@@ -85,7 +85,7 @@
             return this.BadRequest("Project was not found!");
         }
 
-        [Route("Add")]
+       // [Route("Add")]
         [HttpPost]
         [ValidateModelState]
         [CheckModelForNull]
@@ -112,7 +112,7 @@
             return this.Ok();
         }
 
-        [Route("GetAll")]
+        [Route("All")]
         [HttpGet]
         [ValidateModelState]
         [EncryptResultIds]
@@ -137,10 +137,10 @@
         }
 
 
-        [Route("ProjectAddMoney")]
+        //[Route("ProjectAddMoney")]
         //[Authorize]
         [DecryptInputId]
-        [HttpPost]
+        [HttpPut]
         [ValidateModelState]
         [CheckModelForNull]
         public IHttpActionResult AddMoney(AddProjectMoneyRequestModel moneyRequestModel)
@@ -159,6 +159,16 @@
             }
 
             return this.BadRequest("You have no enough money for this donation to be processed! Please chose available amount!");
+        }
+
+        [HttpDelete]
+        public IHttpActionResult Remove([FromBody]string id)
+        {
+            int idToInt = int.Parse(id);
+
+            this.projects.RemoveById(idToInt);
+
+            return this.Ok("Project has been removed!");
         }
     }
 }

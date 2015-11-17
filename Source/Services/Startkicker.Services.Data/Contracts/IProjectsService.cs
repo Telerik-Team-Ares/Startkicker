@@ -18,5 +18,7 @@
         void Update(Project project);
 
         void Remove(Project project);
+
+        void RemoveById(int id);
     }
 }

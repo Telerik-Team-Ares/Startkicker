@@ -250,8 +250,10 @@
     </Compile>
     <Compile Include="Infrastructure\ActionFilters\CheckModelForNullAttribute.cs" />
     <Compile Include="Infrastructure\ActionFilters\ValidateModelStateAttribute.cs" />
+    <Compile Include="Infrastructure\Helpers\CORS\CorsPolicyFactory.cs" />
     <Compile Include="Infrastructure\Helpers\DecryptInputIdAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\EncryptResultIdsAttribute.cs" />
+    <Compile Include="Infrastructure\Helpers\CORS\MyCorsPolicyAttribute.cs" />
     <Compile Include="Models\Request\Account\AddExternalLoginBindingModel.cs" />
     <Compile Include="Models\Request\Account\ChangePasswordBindingModel.cs" />
     <Compile Include="Models\Request\Account\RegisterBindingModel.cs" />

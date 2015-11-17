@@ -8,6 +8,7 @@
     using Startkicker.Data.Models;
     using Startkicker.Services.Data.Contracts;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class CategoriesController : ApiController
     {
@@ -19,7 +20,7 @@
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public IHttpActionResult GetById(int id)
         {
             var categoryDataModel = this.categories.GetById(id);
@@ -28,7 +29,7 @@
                 var result = new CategoryDescriptionResponseModel
                 {
                     Name = categoryDataModel.Name,
-                    Projects = categoryDataModel.Projects,
+                    //Projects = categoryDataModel.Projects,
                     Id = categoryDataModel.Id
                 };
                 return this.Ok(result);
@@ -55,7 +56,7 @@
         }
 
         [HttpGet]
-        [Authorize]
+       // [Authorize]
         public IHttpActionResult GetAll()
         {
             var categoryDataModel = this.categories.GetAll();
@@ -68,7 +69,7 @@
                     var categoryMapped = new CategoryDescriptionResponseModel
                     {
                         Name = category.Name,
-                        Projects = category.Projects,
+                       // Projects = category.Projects,
                         Id = category.Id
                     };
 
