@@ -21,7 +21,6 @@
 
         [HttpGet]
         [Authorize]
-        //[Authorize]
         public IHttpActionResult GetById(int id)
         {
             var categoryDataModel = this.categories.GetById(id);
@@ -30,8 +29,6 @@
                 var result = new CategoryDescriptionResponseModel
                 {
                     Name = categoryDataModel.Name,
-                    Projects = categoryDataModel.Projects,
-                    //Projects = categoryDataModel.Projects,
                     Id = categoryDataModel.Id
                 };
                 return this.Ok(result);
@@ -44,17 +41,21 @@
         [ValidateModelState]
         [CheckModelForNull]
         [Authorize]
-        public IHttpActionResult Add(NewCategoryRequestModel categoryModel)
+        public IHttpActionResult Add([FromBody]NewCategoryRequestModel categoryModel)
         {
-            this.categories.Add(
+            var addedCategoryId = this.categories.Add(
                 new Category
                 {
                     Name = categoryModel.Name,
-                    Projects = categoryModel.Projects,
-                    Id = categoryModel.Id
+                    Projects = categoryModel.Projects
                 });
 
-            return this.Ok();
+            if (addedCategoryId == -1)
+            {
+                return this.BadRequest("Category already exists.");
+            }
+
+            return this.Ok("Id of the added category is: " + addedCategoryId);
         }
 
         [HttpGet]
@@ -72,8 +73,6 @@
                     var categoryMapped = new CategoryDescriptionResponseModel
                     {
                         Name = category.Name,
-                        Projects = category.Projects,
-                        // Projects = category.Projects,
                         Id = category.Id
                     };
 
@@ -84,27 +83,6 @@
             }
 
             return this.BadRequest("Categories were not found!");
-        }
-
-        [HttpPost]
-        [ValidateModelState]
-        [CheckModelForNull]
-        //[Authorize]
-        public IHttpActionResult Add([FromBody]NewCategoryRequestModel categoryModel)
-        {
-            var addedCategoryId = this.categories.Add(
-                new Category
-                {
-                    Name = categoryModel.Name,
-                    Projects = categoryModel.Projects
-                });
-
-            if (addedCategoryId == -1)
-            {
-                return this.BadRequest("Category already exists.");
-            }
-
-            return this.Ok("Id of the added category is: " + addedCategoryId);
         }
     }
 }
