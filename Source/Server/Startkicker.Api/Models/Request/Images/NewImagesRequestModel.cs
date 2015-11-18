@@ -1,13 +1,26 @@
 ﻿namespace Startkicker.Api.Models.Request.Images
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
-    using System.IO;
 
     public class NewImagesRequestModel
     {
         [Required]
-        public FileStream ImageStream { get; set; }
+        public string OriginalFileName { get; set; }
 
-        public int ProjectId { get; set; }
+        [Required]
+
+        public string FileExtension { get; set; }
+
+        [Required]
+        public string Base64Content { get; set; }
+
+        public byte[] ByteArrayContent
+        {
+            get
+            {
+                return Convert.FromBase64String(this.Base64Content);
+            }
+        }
     }
 }

@@ -9,12 +9,14 @@
     {
         Image GetById(int id);
 
+        Image GetByUrl(string url);
+
         void Add(Image image);
 
         void Update(Image image);
 
         void Remove(Image image);
 
-        Task<string> UploadAsync(Stream stream);
+        Task<string> UploadAsync(byte[] content, string extension);
     }
 }

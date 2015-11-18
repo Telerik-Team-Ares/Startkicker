@@ -20,16 +20,19 @@
     using Startkicker.Services.Data.Contracts;
 
     using WebGrease.Css.Extensions;
+    using System.Threading.Tasks;
 
     [RoutePrefix("api/Projects")]
     public class ProjectsController : ApiController
     {
         private readonly IProjectsService projects;
+        private readonly IImagesService images;
         private readonly IPublisher publisher;
 
-        public ProjectsController(IProjectsService projects, IPublisher publisher)
+        public ProjectsController(IProjectsService projects, IImagesService images, IPublisher publisher)
         {
             this.projects = projects;
+            this.images = images;
             this.publisher = publisher;
         }
 
@@ -91,21 +94,32 @@
         [CheckModelForNull]
         //[DecryptInputId]
         [Authorize]
-        public IHttpActionResult Add(NewProjectRequestModel projectModel)
+        public async Task<IHttpActionResult> Add(NewProjectRequestModel projectModel)
         {
-            this.projects.Add(
-                new Project
-                {
-                    EstimatedDate = DateTime.Now.AddDays(projectModel.EstimatedDays),
-                    Name = projectModel.Name,
-                    IsRemoved = false,
-                    IsClosed = false,
-                    CollectedMoney = 0,
-                    Description = projectModel.Description,
-                    GoalMoney = projectModel.GoalMoney,
-                    InnovatorId = this.User.Identity.GetUserId(),
-                    CategoryId = projectModel.CategoryId,
-                });
+            var projectToAdd = new Project
+            {
+                EstimatedDate = DateTime.Now.AddDays(projectModel.EstimatedDays),
+                Name = projectModel.Name,
+                IsRemoved = false,
+                IsClosed = false,
+                CollectedMoney = 0,
+                Description = projectModel.Description,
+                GoalMoney = projectModel.GoalMoney,
+                InnovatorId = this.User.Identity.GetUserId(),
+                CategoryId = projectModel.CategoryId,
+            };
+
+
+            var imageUrl = await images.UploadAsync(projectModel.Image.ByteArrayContent, projectModel.Image.FileExtension);
+
+            var projectImage = new Image
+            {
+                ImageUrl = imageUrl
+            };
+
+            projectToAdd.Images = new List<Image>() { projectImage };
+
+            this.projects.Add(projectToAdd);
 
             // TODO: Remove this (just for testing)
             this.publisher.Emit("new-project-added", string.Format("New project was created!"));
