@@ -7,9 +7,11 @@
     {
         int Add(Category category);
 
-        IQueryable<Category> GetAll(int page = 1, int pageSize = 10);
+        IQueryable<Category> GetPage(int page = 1, int pageSize = 10);
 
         Category GetById(int id);
+
+        IQueryable<Category> GetAll();
 
         void Remove(Category category);
 

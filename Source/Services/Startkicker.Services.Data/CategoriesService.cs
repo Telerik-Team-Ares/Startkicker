@@ -8,16 +8,16 @@
 
     public class CategoriesService : ICategoriesService
     {
-        private readonly IRepository<Category> categoriesPepo;
+        private readonly IRepository<Category> categoriesRepo;
 
         public CategoriesService(IRepository<Category> categoriesRepo)
         {
-            this.categoriesPepo = categoriesRepo;
+            this.categoriesRepo = categoriesRepo;
         }
 
         public Category GetById(int id)
         {
-            Category result = this.categoriesPepo.GetById(id);
+            Category result = this.categoriesRepo.GetById(id);
             if (result != null && !result.IsRemoved)
             {
                 return result;
@@ -26,39 +26,44 @@
             return null;
         }
 
-        public IQueryable<Category> GetAll(int page = 1, int pageSize = 10)
+        public IQueryable<Category> GetPage(int page = 1, int pageSize = 10)
         {
-            return this.categoriesPepo
+            return this.categoriesRepo
                 .All()
                 .OrderByDescending(c => c.Name)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize);
         }
 
+        public IQueryable<Category> GetAll()
+        {
+            return this.categoriesRepo.All();
+        }
+
         public int Add(Category category)
         {
-            if (this.categoriesPepo.All().Contains(category))
+            if (this.categoriesRepo.All().Any(c => c.Name == category.Name))
             {
                 return -1;
             }
 
-            this.categoriesPepo.Add(category);
-            this.categoriesPepo.SaveChanges();
+            this.categoriesRepo.Add(category);
+            this.categoriesRepo.SaveChanges();
             return category.Id;
         }
 
         public int Update(Category category)
         {
-            this.categoriesPepo.Update(category);
-            this.categoriesPepo.SaveChanges();
+            this.categoriesRepo.Update(category);
+            this.categoriesRepo.SaveChanges();
             return category.Id;
         }
 
         public void Remove(Category Category)
         {
             Category.IsRemoved = true;
-            this.categoriesPepo.Update(Category);
-            this.categoriesPepo.SaveChanges();
+            this.categoriesRepo.Update(Category);
+            this.categoriesRepo.SaveChanges();
         }
     }
 }

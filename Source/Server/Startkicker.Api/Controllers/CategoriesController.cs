@@ -19,7 +19,7 @@
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public IHttpActionResult GetById(int id)
         {
             var categoryDataModel = this.categories.GetById(id);
@@ -37,25 +37,8 @@
             return this.BadRequest("Category was not found!");
         }
 
-        [HttpPost]
-        [ValidateModelState]
-        [CheckModelForNull]
-        [Authorize]
-        public IHttpActionResult Add(NewCategoryRequestModel categoryModel)
-        {
-            this.categories.Add(
-                new Category
-                {
-                    Name = categoryModel.Name,
-                    Projects = categoryModel.Projects,
-                    Id = categoryModel.Id
-                });
-
-            return this.Ok();
-        }
-
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public IHttpActionResult GetAll()
         {
             var categoryDataModel = this.categories.GetAll();
@@ -81,5 +64,25 @@
             return this.BadRequest("Categories were not found!");
         }
 
+        [HttpPost]
+        [ValidateModelState]
+        [CheckModelForNull]
+        //[Authorize]
+        public IHttpActionResult Add([FromBody]NewCategoryRequestModel categoryModel)
+        {
+            var addedCategoryId = this.categories.Add(
+                new Category
+                {
+                    Name = categoryModel.Name,
+                    Projects = categoryModel.Projects
+                });
+
+            if (addedCategoryId == -1)
+            {
+                return this.BadRequest("Category already exists.");
+            }
+
+            return this.Ok("Id of the added category is: " + addedCategoryId);
+        }
     }
 }
