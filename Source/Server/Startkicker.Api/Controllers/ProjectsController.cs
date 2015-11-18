@@ -143,7 +143,8 @@
                             Id = y.Id.ToString(),
                             Name = y.Name,
                             GoalMoney = y.GoalMoney,
-                            EstimatedDate = y.EstimatedDate
+                            EstimatedDate = y.EstimatedDate,
+                            CollectedMoney = y.CollectedMoney
                         })
                     .ToList<ProjectListItemResponseModel>();
 
