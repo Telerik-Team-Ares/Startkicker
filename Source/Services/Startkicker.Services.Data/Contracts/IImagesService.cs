@@ -17,6 +17,6 @@
 
         void Remove(Image image);
 
-        Task<string> UploadAsync(Stream stream);
+        Task<string> UploadAsync(byte[] content, string extension);
     }
 }

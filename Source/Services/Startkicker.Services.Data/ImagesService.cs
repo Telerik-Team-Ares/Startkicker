@@ -63,18 +63,19 @@
             this.imagesRepo.SaveChanges();
 
         }
-        public async Task<string> UploadAsync(Stream stream)
+        public async Task<string> UploadAsync(byte[] content, string extension)
         {
             string guid = Guid.NewGuid().ToString();
-            string extension = "jpg";
-
             string imageUrl = string.Format("/{0}.{1}", guid, extension);
 
-            using (var dbx = new DropboxClient(token))
+            var dbx = new DropboxClient(token);
+
+            using (var mem = new MemoryStream(content))
             {
-                var image = await dbx.Files.UploadAsync(new CommitInfo(imageUrl), stream);
+                var image = await dbx.Files.UploadAsync(new CommitInfo(imageUrl), body: mem);
                 var shareLink = await dbx.Sharing.CreateSharedLinkAsync(image.PathLower);
                 var rawLink = ProcessImageLink(shareLink.Url);
+
                 return rawLink;
             }
         }

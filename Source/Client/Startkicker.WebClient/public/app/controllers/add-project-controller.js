@@ -5,15 +5,17 @@
 		.module('Startkicker.controllers')
 		.controller('AddProjectController', addProjectController);
 
-	addProjectController.$inject = ['$location', 'projects', 'categories', 'notifier','showServerErrors'];
+	addProjectController.$inject = ['$scope', '$location', 'projects', 'categories', 'notifier','showServerErrors'];
 
-	function addProjectController($location, projects, categories, notifier, showServerErrors) {
+	function addProjectController($scope, $location, projects, categories, notifier, showServerErrors) {
 		var vm = this;
 
 		vm.categories = categories.getCachedCategories();
 		vm.project = {};
 
 		vm.addProject = function(project) {
+			console.log(project)
+
 			projects
 				.add(project)
 				.then(function() {

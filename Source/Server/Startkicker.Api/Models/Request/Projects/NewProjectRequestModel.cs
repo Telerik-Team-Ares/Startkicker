@@ -8,6 +8,7 @@
     using System.Web;
 
     using Startkicker.Data.Models;
+    using Images;
 
     public class NewProjectRequestModel
     {
@@ -31,9 +32,9 @@
 
         public int CategoryId { get; set; }
 
-        //public ICollection<Image> Images { get; set; }
+        [Required]
+        public NewImagesRequestModel Image { get; set; }
 
         //public ICollection<User> Contributors{get; set;}
-
     }
 }

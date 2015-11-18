@@ -58,7 +58,7 @@
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public IHttpActionResult GetAll()
         {
             var categoryDataModel = this.categories.GetAll();

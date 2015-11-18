@@ -24,12 +24,12 @@
         //[Authorize]
         public async Task<IHttpActionResult> Add(NewImagesRequestModel model)
         {
-            string imageUrl = await images.UploadAsync(model.ImageStream);
+            string imageUrl = await images.UploadAsync(model.ByteArrayContent, model.FileExtension);
             this.images.Add(
                 new Image
                 {
                     ImageUrl = imageUrl,
-                    ProjectId = model.ProjectId,
+                    //ProjectId = model.ProjectId,
                     IsRemoved = false
                 });
 

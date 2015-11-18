@@ -3,9 +3,10 @@
 
 	angular.module('Startkicker.controllers', []);
 	angular.module('Startkicker.services', []);
+	angular.module('Startkicker.directives', []);
 
 	angular
-		.module('Startkicker', ['ngRoute', 'Startkicker.controllers', 'Startkicker.services'])
+		.module('Startkicker', ['ngRoute', 'Startkicker.controllers', 'Startkicker.services', 'Startkicker.directives'])
 		.config(routesConfig)
 		.run(['identity', '$http', checkForLoggedUser])
 		.run(['categories', cashCategories])

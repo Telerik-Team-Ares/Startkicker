@@ -18,6 +18,7 @@
 	"globals": {
 		"angular": false,
 		"localStorage": false,
-		"toastr": false
+		"toastr": false,
+		"FileReader": false
 	}
 }
