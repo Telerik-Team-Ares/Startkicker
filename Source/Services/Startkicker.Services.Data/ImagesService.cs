@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Startkicker.Data.Models;
@@ -30,6 +31,11 @@
             }
 
             return null;
+        }
+
+        public Image GetByUrl(string url)
+        {
+            return this.imagesRepo.All().First(i => i.ImageUrl == url);
         }
 
         public void Add(Image image)
