@@ -59,10 +59,10 @@
             return category.Id;
         }
 
-        public void Remove(Category Category)
+        public void Remove(Category category)
         {
-            Category.IsRemoved = true;
-            this.categoriesRepo.Update(Category);
+            category.IsRemoved = true;
+            this.categoriesRepo.Update(category);
             this.categoriesRepo.SaveChanges();
         }
     }

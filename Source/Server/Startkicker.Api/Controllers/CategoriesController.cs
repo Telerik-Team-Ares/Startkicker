@@ -1,5 +1,6 @@
 ﻿namespace Startkicker.Api.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Http;
 
     using Startkicker.Api.Infrastructure.ActionFilters;
@@ -7,8 +8,6 @@
     using Startkicker.Api.Models.Response.Categories;
     using Startkicker.Data.Models;
     using Startkicker.Services.Data.Contracts;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class CategoriesController : ApiController
     {
@@ -60,7 +59,6 @@
 
         [HttpGet]
         [Authorize]
-
         public IHttpActionResult GetAll()
         {
             var categoryDataModel = this.categories.GetAll();
