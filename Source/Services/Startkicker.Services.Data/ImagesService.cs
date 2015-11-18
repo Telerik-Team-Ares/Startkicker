@@ -14,7 +14,7 @@
 
     public class ImagesService : IImagesService
     {
-        private const string token = "LMSUBAH0x_AAAAAAAAAAHYdRzBEy_KFWb3wKOGHID8Wih_H3izmylXokSUUhj824";
+        private const string Token = "Xp5y9c75euAAAAAAAAAABmGX9iPh2iAg9ZL-XcGPyC7vRu3M38QC-Yo5Tzq05_h_";
         private readonly IRepository<Image> imagesRepo;
 
         public ImagesService(IRepository<Image> imagesRepo)
@@ -63,12 +63,13 @@
             this.imagesRepo.SaveChanges();
 
         }
+
         public async Task<string> UploadAsync(byte[] content, string extension)
         {
             string guid = Guid.NewGuid().ToString();
             string imageUrl = string.Format("/{0}.{1}", guid, extension);
 
-            var dbx = new DropboxClient(token);
+            var dbx = new DropboxClient(Token);
 
             using (var mem = new MemoryStream(content))
             {

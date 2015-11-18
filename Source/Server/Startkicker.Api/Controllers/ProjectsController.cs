@@ -109,15 +109,15 @@
                 CategoryId = projectModel.CategoryId,
             };
 
+            var projectImages = new List<Image>();
 
-            var imageUrl = await images.UploadAsync(projectModel.Image.ByteArrayContent, projectModel.Image.FileExtension);
-
-            var projectImage = new Image
+            foreach (var image in projectModel.Images)
             {
-                ImageUrl = imageUrl
-            };
+                var imageUrl = await images.UploadAsync(image.ByteArrayContent, image.FileExtension);
+                projectImages.Add(new Image { ImageUrl = imageUrl });
+            }
 
-            projectToAdd.Images = new List<Image>() { projectImage };
+            projectToAdd.Images = projectImages;
 
             this.projects.Add(projectToAdd);
 

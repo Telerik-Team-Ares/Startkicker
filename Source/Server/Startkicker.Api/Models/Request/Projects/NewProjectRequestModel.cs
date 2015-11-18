@@ -33,7 +33,7 @@
         public int CategoryId { get; set; }
 
         [Required]
-        public NewImagesRequestModel Image { get; set; }
+        public ICollection<NewImagesRequestModel> Images { get; set; }
 
         //public ICollection<User> Contributors{get; set;}
     }

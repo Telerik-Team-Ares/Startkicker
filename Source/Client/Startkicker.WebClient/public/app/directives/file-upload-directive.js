@@ -14,21 +14,18 @@
 				var model = $parse(attr.fileModel);
 
 				element.bind('change', function() {
-					readFile(element[0].files[0])
-						.then(function (values) {
-							model.assign(scope.vm, values);
+					var files = Array.prototype.slice.call(element[0].files);
+
+					$q.all(files.map(readFile))
+						.then(function(data) {
+							model.assign(scope.vm, data);
 						});
 				});
 
-				// $q.all(Array.prototype.slice.call(element.files, 0).map(readFile))
-				// 	.then(function(values) {
-				// 		console.log(values);
-				// 	});
-
 				function readFile(file) {
-					var deferred = $q.defer();
+					var reader = new FileReader(),
+						deferred = $q.defer();
 
-					var reader = new FileReader();
 					reader.onload = function(e) {
 						var convertedFile = e.target.result;
 						var result = {
@@ -39,9 +36,11 @@
 
 						deferred.resolve(result);
 					};
+
 					reader.onerror = function(e) {
 						deferred.reject(e);
 					};
+
 					reader.readAsDataURL(file);
 
 					return deferred.promise;
