@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Startkicker.Data.Models;
@@ -24,6 +25,17 @@
         public Image GetById(int id)
         {
             Image result = this.imagesRepo.GetById(id);
+            if (result != null && !result.IsRemoved)
+            {
+                return result;
+            }
+
+            return null;
+        }
+
+        public Image GetByUrl(string url)
+        {
+            Image result = this.imagesRepo.All().First(i => i.ImageUrl == url);
             if (result != null && !result.IsRemoved)
             {
                 return result;

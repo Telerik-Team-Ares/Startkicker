@@ -22,18 +22,33 @@
 
         [HttpPost]
         //[Authorize]
-        public async Task<IHttpActionResult> Add(NewImagesRequestModel request)
+        public async Task<IHttpActionResult> Add(NewImagesRequestModel model)
         {
-            string imageUrl = await images.UploadAsync(request.ImageStream);
+            string imageUrl = await images.UploadAsync(model.ImageStream);
             this.images.Add(
                 new Image
                 {
                     ImageUrl = imageUrl,
-                    ProjectId = request.ProjectId,
+                    ProjectId = model.ProjectId,
                     IsRemoved = false
                 });
 
             return this.Ok(imageUrl);
+        }
+
+        [HttpDelete]
+        //[Authorize]
+        public async Task<IHttpActionResult> Remove(DeleteImageRequestModel model)
+        {
+            var image = this.images.GetByUrl(model.ImageUrl);
+            if (image != null)
+            {
+                this.images.Remove(image);
+                return this.Ok();
+            } else
+            {
+                return this.NotFound();
+            }
         }
     }
 }

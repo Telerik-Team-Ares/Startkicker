@@ -9,6 +9,8 @@
     {
         Image GetById(int id);
 
+        Image GetByUrl(string url);
+
         void Add(Image image);
 
         void Update(Image image);
