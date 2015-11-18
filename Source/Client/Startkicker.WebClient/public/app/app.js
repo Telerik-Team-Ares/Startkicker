@@ -42,6 +42,11 @@
 				controller: 'ProjectDetailsController',
 				controllerAs: 'vm',
 			})
+			.when('/users/profile/:userName', {
+				templateUrl: 'templates/user-profile.html',
+				controller: 'UserProfileController',
+				controllerAs: 'vm',
+			})
 			.otherwise({ redirectTo: '/' });
 	}
 

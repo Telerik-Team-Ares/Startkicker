@@ -18,6 +18,8 @@
 			.then(function (response) {
 				console.log(response);
 				vm.project = response;
+			},function(error){
+				showServerErrors.all(error);
 			})
 
 

@@ -48,7 +48,7 @@
                 ProjectDescriptionResponseModel result = new ProjectDescriptionResponseModel
                 {
                     CategoryName =
-                                                                     projectDataModel
+                                                                    projectDataModel
                                                                      .Category.Name,
                     Name =
                                                                      projectDataModel
@@ -72,8 +72,8 @@
                     GoalMoney =
                                                                      projectDataModel
                                                                      .GoalMoney,
-                    InnovatorId = "2",
-                    //Innovator = projectDataModel.Innovator.UserName,
+                    //InnovatorId = "2",
+                    Innovator = projectDataModel.Innovator.UserName,
                     IsClosed =
                                                                      projectDataModel
                                                                      .IsClosed,
@@ -85,12 +85,12 @@
             return this.BadRequest("Project was not found!");
         }
 
-       // [Route("Add")]
+        // [Route("Add")]
         [HttpPost]
         [ValidateModelState]
         [CheckModelForNull]
         //[DecryptInputId]
-        //[Authorize]
+        [Authorize]
         public IHttpActionResult Add(NewProjectRequestModel projectModel)
         {
             this.projects.Add(
@@ -117,7 +117,7 @@
         [ValidateModelState]
         // [EncryptResultIds]
         //  [Route("projects/getAll")]
-        public IHttpActionResult GetAll(int page=1, int size=10)
+        public IHttpActionResult GetAll(int page = 1, int size = 10)
         {
             ICollection<ProjectListItemResponseModel> projectsList =
                 this.projects.GetAll(page, size)
@@ -162,7 +162,7 @@
         }
 
         [HttpDelete]
-       // [DecryptInputId]
+        // [DecryptInputId]
         public IHttpActionResult Remove(string id)
         {
             int idToInt = int.Parse(id);
