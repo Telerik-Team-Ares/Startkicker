@@ -14,10 +14,14 @@
 				<h4><strong>Goal : {{ vm.project.goalMoney }} $</strong></h4>
 				<h4><strong>Collected : {{ vm.project.collectedMoney }} $</strong></h4>
 				<h4><strong>Days to go : 15</strong></h4>
+				<div class="progress">
+					<div class="progress-bar progress-bar-success" style="width: {{vm.project.collectedMoney/vm.project.goalMoney * 100}}%"></div>
+				</div>
 				<button class="btn btn-success">Donate</button>
 			</div>
 		</div>
 		<hr>
+
 		<div class="row">
 			<p>{{ vm.project.description }}</p>
 		</div>
