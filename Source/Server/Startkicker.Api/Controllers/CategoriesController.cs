@@ -8,6 +8,7 @@
     using Startkicker.Data.Models;
     using Startkicker.Services.Data.Contracts;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class CategoriesController : ApiController
     {
@@ -19,6 +20,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         //[Authorize]
         public IHttpActionResult GetById(int id)
         {
@@ -29,6 +31,7 @@
                 {
                     Name = categoryDataModel.Name,
                     Projects = categoryDataModel.Projects,
+                    //Projects = categoryDataModel.Projects,
                     Id = categoryDataModel.Id
                 };
                 return this.Ok(result);
@@ -37,8 +40,26 @@
             return this.BadRequest("Category was not found!");
         }
 
+        [HttpPost]
+        [ValidateModelState]
+        [CheckModelForNull]
+        [Authorize]
+        public IHttpActionResult Add(NewCategoryRequestModel categoryModel)
+        {
+            this.categories.Add(
+                new Category
+                {
+                    Name = categoryModel.Name,
+                    Projects = categoryModel.Projects,
+                    Id = categoryModel.Id
+                });
+
+            return this.Ok();
+        }
+
         [HttpGet]
-        //[Authorize]
+        [Authorize]
+
         public IHttpActionResult GetAll()
         {
             var categoryDataModel = this.categories.GetAll();
@@ -52,6 +73,7 @@
                     {
                         Name = category.Name,
                         Projects = category.Projects,
+                        // Projects = category.Projects,
                         Id = category.Id
                     };
 

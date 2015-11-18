@@ -7,6 +7,7 @@
 	angular
 		.module('Startkicker', ['ngRoute', 'Startkicker.controllers', 'Startkicker.services'])
 		.config(routesConfig)
+		.run(['identity', '$http', checkForLoggedUser])
 		.run(['categories', cashCategories])
 		.value('toastr', toastr)
 		.constant('BaseUrl', 'http://localhost:50777')
@@ -36,19 +37,33 @@
 				controller: 'AddProjectController',
 				controllerAs: 'vm',
 			})
-			.when('/projects/details', {
+			.when('/projects/details/:id', {
 				templateUrl: 'templates/project-details.html',
 				controller: 'ProjectDetailsController',
 				controllerAs: 'vm',
 			})
+			.when('/users/profile/:userName', {
+				templateUrl: 'templates/user-profile.html',
+				controller: 'UserProfileController',
+				controllerAs: 'vm',
+			})
 			.otherwise({ redirectTo: '/' });
+	}
+
+	function checkForLoggedUser(identity, $http) {
+		var token = identity.getAccessToken();
+
+		if (!!token) {
+			$http.defaults.headers.common.Authorization = 'Bearer ' + token;
+			console.log('logged');
+		}
 	}
 
 	function cashCategories(categories) {
 		categories
 			.getAll()
 			.then(function(response) {
-				localStorage.setItem('categories', response.data);
+				localStorage.setItem('categories', JSON.stringify(response));
 			});
 	}
 }());

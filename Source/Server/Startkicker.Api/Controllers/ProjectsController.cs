@@ -33,12 +33,12 @@
             this.publisher = publisher;
         }
 
-        [Route("GetById")]
         [HttpGet]
+        //[Route("GetById")]
         //[Authorize]
-        [EncryptResultIds]
-        [DecryptInputId]
-        //[Route("projects/getById/{id}")]
+        //[DecryptInputId]
+        //[EncryptResultIds]
+        //[Route("projects")]
         public IHttpActionResult GetById(string id)
         {
             int idTo = int.Parse(id);
@@ -48,7 +48,7 @@
                 ProjectDescriptionResponseModel result = new ProjectDescriptionResponseModel
                 {
                     CategoryName =
-                                                                     projectDataModel
+                                                                    projectDataModel
                                                                      .Category.Name,
                     Name =
                                                                      projectDataModel
@@ -72,8 +72,8 @@
                     GoalMoney =
                                                                      projectDataModel
                                                                      .GoalMoney,
-                    InnovatorId = "2",
-                    //Innovator = projectDataModel.Innovator.UserName,
+                    //InnovatorId = "2",
+                    Innovator = projectDataModel.Innovator.UserName,
                     IsClosed =
                                                                      projectDataModel
                                                                      .IsClosed,
@@ -85,10 +85,11 @@
             return this.BadRequest("Project was not found!");
         }
 
-        [Route("Add")]
+        // [Route("Add")]
         [HttpPost]
         [ValidateModelState]
         [CheckModelForNull]
+        //[DecryptInputId]
         [Authorize]
         public IHttpActionResult Add(NewProjectRequestModel projectModel)
         {
@@ -112,12 +113,11 @@
             return this.Ok();
         }
 
-        [Route("GetAll")]
         [HttpGet]
         [ValidateModelState]
-        [EncryptResultIds]
+        // [EncryptResultIds]
         //  [Route("projects/getAll")]
-        public IHttpActionResult GetAll(int page, int size)
+        public IHttpActionResult GetAll(int page = 1, int size = 10)
         {
             ICollection<ProjectListItemResponseModel> projectsList =
                 this.projects.GetAll(page, size)
@@ -137,10 +137,10 @@
         }
 
 
-        [Route("ProjectAddMoney")]
+        //[Route("ProjectAddMoney")]
         //[Authorize]
-        [DecryptInputId]
-        [HttpPost]
+        //[DecryptInputId]
+        [HttpPut]
         [ValidateModelState]
         [CheckModelForNull]
         public IHttpActionResult AddMoney(AddProjectMoneyRequestModel moneyRequestModel)
@@ -159,6 +159,17 @@
             }
 
             return this.BadRequest("You have no enough money for this donation to be processed! Please chose available amount!");
+        }
+
+        [HttpDelete]
+        // [DecryptInputId]
+        public IHttpActionResult Remove(string id)
+        {
+            int idToInt = int.Parse(id);
+
+            this.projects.RemoveById(idToInt);
+
+            return this.Ok("Project has been removed!");
         }
     }
 }

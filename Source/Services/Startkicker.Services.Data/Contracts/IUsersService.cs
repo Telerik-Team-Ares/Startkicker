@@ -5,5 +5,7 @@
     public interface IUsersService
     {
         User GetById(string id);
+
+        User GetByUserName(string userName);
     }
 }

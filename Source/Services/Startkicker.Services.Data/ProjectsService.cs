@@ -59,6 +59,14 @@
             this.projectsPepo.SaveChanges();
         }
 
+        public void RemoveById(int id)
+        {
+            Project projectToRemove = this.projectsPepo.GetById(id);
+            projectToRemove.IsRemoved = true;
+            this.projectsPepo.Update(projectToRemove);
+            this.projectsPepo.SaveChanges();
+        }
+
         public int AddMoney(int projectId, int amount, string userId)
         {
             User user = this.usersRepo.GetById(userId);
@@ -67,7 +75,7 @@
             {
                 return -1;
             }
-            
+
             if ((user.MoneyAmount - amount) < 0)
             {
                 return 0;
