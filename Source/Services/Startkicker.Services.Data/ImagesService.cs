@@ -35,7 +35,13 @@
 
         public Image GetByUrl(string url)
         {
-            return this.imagesRepo.All().First(i => i.ImageUrl == url);
+            Image result = this.imagesRepo.All().First(i => i.ImageUrl == url);
+            if (result != null && !result.IsRemoved)
+            {
+                return result;
+            }
+
+            return null;
         }
 
         public void Add(Image image)
