@@ -48,12 +48,17 @@
 				controller: 'UserProfileController',
 				controllerAs: 'vm',
 			})
-			.when('/discover', {
-				templateUrl: 'templates/discover-categories.html',
-				controller: 'CategoriesController',
+			.when('/projects/explore', {
+				templateUrl: 'templates/explore.html',
+				controller: 'ExploreController',
 				controllerAs: 'vm',
 			})
-			.otherwise({ redirectTo: '/' });
+			.when('/projects/explore/:id', {
+				templateUrl: 'templates/explore-category.html',
+				// controller: 'ExploreController',
+				// controllerAs: 'vm',
+			})
+			// .otherwise({ redirectTo: '/' });
 	}
 
 	function checkForLoggedUser(identity, $http) {

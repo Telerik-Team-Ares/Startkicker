@@ -13,6 +13,8 @@
 		projects
 			.getAll()
 			.then(function(response) {
+
+				console.log(response);
 				vm.projects = response;
 			});
 	}
