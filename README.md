@@ -21,7 +21,7 @@ Startkicker is a web application that provide services for publishing and fundin
 |POST|api/categories|Create new category and return the category id|
 |POST|api/images|Upload new image for existing project|
 |DELETE|api/images|Remove image| 
-|GET|api/projects/{id}| Get project with given id|
+|GET (public)|api/projects/{id}| Get project with given id|
 |GET (public)|api/projects?page=n|  Gets (page-1)*10 -> (page-1)*10+10 projects|
 |GET (public)|api/projects?categoryId=n&page=k| Gets (page-1)*10 -> (page-1)*10+10 projects from category with id k|
 |POST|api/projects| Create new project and return project id|
