@@ -9,7 +9,9 @@
     {
         IQueryable<Project> GetById(int id);
 
-        IQueryable<Project> GetAll(int page, int pageSize);
+        IQueryable<Project> GetAll();
+
+        IQueryable<Project> GetByCategory(int categoryId);
 
         int Add(string name, string description, int goalMoney, int estimatedDays, int categoryId, string userId, ICollection<Image> images);
 
