@@ -8,7 +8,6 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
-    using System.Web.Http.Cors;
 
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -16,14 +15,12 @@
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.OAuth;
-    using Models;
-
-    using Startkicker.Api.Providers;
-    using Startkicker.Api.Results;
-    using Data.Models;
-
+    
     using Startkicker.Api.Models.Request.Account;
     using Startkicker.Api.Models.Response.Account;
+    using Startkicker.Api.Providers;
+    using Startkicker.Api.Results;
+    using Startkicker.Data.Models;
 
     [Authorize]
     [RoutePrefix("api/Account")]

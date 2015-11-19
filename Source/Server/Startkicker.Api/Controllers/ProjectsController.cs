@@ -80,7 +80,6 @@
             return this.Ok(result);
         }
 
-
         [HttpPut]
         [ValidateModelState]
         [CheckModelForNull]
@@ -88,7 +87,11 @@
         {
             string userId = this.User.Identity.GetUserId();
 
-            var result = this.projects.AddMoney(int.Parse(moneyRequestModel.Id), moneyRequestModel.MoneyAmount, userId);
+            var result = this.projects.AddMoney(
+                int.Parse(moneyRequestModel.Id), 
+                moneyRequestModel.MoneyAmount, 
+                userId);
+
             if (result == 1)
             {
                 return this.Ok("Your money support was verified!");

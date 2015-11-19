@@ -8,6 +8,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration.Conventions;
 
+
     public class Project
     {
         private ICollection<ContributorsForProjects> contributors;
@@ -25,11 +26,11 @@
 
         public int Id { get; set; }
 
-        [Required]
         [Index]
         [MaxLength(200)]
         [MinLength(5)]
         [Index(IsUnique = true)]
+        [Required]
         public string Name { get; set; }
 
         [Required]
@@ -50,7 +51,7 @@
 
         [Required]
         [Column(TypeName = "Money")]
-        [Range(0, int.MaxValue)]
+        [Range(10, int.MaxValue)]
         public int GoalMoney { get; set; }
 
         public int CategoryId { get; set; }
