@@ -16,7 +16,16 @@
 			$http
 				.post(url, category)
 				.then(function(response) {
-					deferred.resolve(response.data);
+					var newCategory = {
+						name: category.name,
+						id: response.data
+					},
+					cachedCategories = getCachedCategories();
+
+					cachedCategories.push(newCategory);
+					localStorage.setItem('categories', JSON.stringify(cachedCategories));
+
+					deferred.resolve(newCategory);
 				}, function(err) {
 					deferred.reject(err);
 				});

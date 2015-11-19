@@ -58,6 +58,11 @@
 				controller: 'ExploreCategoryController',
 				controllerAs: 'vm',
 			})
+			.when('/categories', {
+				templateUrl: 'templates/categories.html',
+				controller: 'CategoriesController',
+				controllerAs: 'vm',
+			})
 			// .otherwise({ redirectTo: '/' });
 	}
 
@@ -66,7 +71,6 @@
 
 		if (!!token) {
 			$http.defaults.headers.common.Authorization = 'Bearer ' + token;
-			console.log('logged');
 		}
 	}
 

@@ -54,7 +54,7 @@
                 return this.BadRequest("Category already exists.");
             }
 
-            return this.Ok("Id of the added category is: " + addedCategoryId);
+            return this.Ok(addedCategoryId);
         }
 
         [HttpGet]

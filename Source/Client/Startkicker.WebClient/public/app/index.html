@@ -35,6 +35,7 @@
 								<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>  {{ vm.loggedUser }}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#/users/profile/{{ vm.loggedUser }}"><span class="glyphicon glyphicon-user"></span>  Profile Details</a></li>
+									<li><a href="#/categories"><span class="glyphicon glyphicon-cog"></span>  Manage Categories</a></li>
 									<li ng-click="vm.logout()"><a href=""><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
 								</ul>
 							</li>
@@ -68,6 +69,7 @@
 		<script src="app/controllers/user-profile-controller.js"></script>
 		<script src="app/controllers/explore-controller.js"></script>
 		<script src="app/controllers/explore-category-controller.js"></script>
+		<script src="app/controllers/categories-controller.js"></script>
 		<!-- services -->
 		<script src="app/services/auth-service.js"></script>
 		<script src="app/services/identity-service.js"></script>

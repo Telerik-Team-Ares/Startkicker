@@ -1,0 +1,27 @@
+<div class="row">
+	<form class="form-horizontal">
+		<fieldset>
+			<legend>Manage categories</legend>
+			<div class="form-group">
+				<label for="tb-category-name" class="col-md-3 control-label">Category name</label>
+				<div class="col-md-6">
+					<input ng-model="vm.newCategoryName" type="text" class="form-control" id="tb-category-name" placeholder="Category name">
+				</div>
+				<div class="col-md-3">
+					<button ng-click="vm.addCategory(vm.newCategoryName)" class="btn btn-success">Add Category</button>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+	<div ng-repeat="category in vm.categories" class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon"><span class=" glyphicon glyphicon-folder-open"></span></span>
+			<input type="text" class="form-control" value="{{ category.name }}" disabled>
+			<span class="input-group-btn">
+				<button class="btn btn-danger" type="button">
+				<span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>
