@@ -68,10 +68,9 @@
         {
             string guid = Guid.NewGuid().ToString();
             string imageUrl = string.Format("/{0}.{1}", guid, extension);
-
-            var dbx = new DropboxClient(Token);
-
+            
             using (var mem = new MemoryStream(content))
+            using (var dbx = new DropboxClient(Token))
             {
                 var image = await dbx.Files.UploadAsync(new CommitInfo(imageUrl), body: mem);
                 var shareLink = await dbx.Sharing.CreateSharedLinkAsync(image.PathLower);
