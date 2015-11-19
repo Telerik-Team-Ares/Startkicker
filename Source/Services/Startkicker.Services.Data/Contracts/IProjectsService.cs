@@ -11,7 +11,8 @@
 
         IQueryable<Project> GetAll(int page = 1, int pageSize = 10);
 
-        void Add(Project project);
+        //void Add(Project project);
+        int Add(Project project);      
 
         int AddMoney(int projectId, int amount, string userId);
 

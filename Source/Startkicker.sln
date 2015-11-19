@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{57
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Startkicker.Services.Data", "Services\Startkicker.Services.Data\Startkicker.Services.Data.csproj", "{621AE641-ED5F-4C3B-A0FA-556BA9544675}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CE6CDF42-A288-4107-A23F-0367B166FE90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Startkicker.Services.Data.Tests", "Tests\Startkicker.Services.Data.Tests\Startkicker.Services.Data.Tests.csproj", "{461A2C20-A2B2-41E5-BF79-E3998CB807EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,10 @@ Global
 		{621AE641-ED5F-4C3B-A0FA-556BA9544675}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{621AE641-ED5F-4C3B-A0FA-556BA9544675}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{621AE641-ED5F-4C3B-A0FA-556BA9544675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{461A2C20-A2B2-41E5-BF79-E3998CB807EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{461A2C20-A2B2-41E5-BF79-E3998CB807EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{461A2C20-A2B2-41E5-BF79-E3998CB807EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{461A2C20-A2B2-41E5-BF79-E3998CB807EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +56,6 @@ Global
 		{74C0976C-F6CE-4D7D-A997-9D218CD18028} = {188B7903-8BB6-489E-869B-FAF8CEF5EC43}
 		{292B6628-C1BD-4F14-B5EA-AC06FB53296C} = {188B7903-8BB6-489E-869B-FAF8CEF5EC43}
 		{621AE641-ED5F-4C3B-A0FA-556BA9544675} = {57E2F5C8-B99E-45F1-B8C3-016F57CA1FF1}
+		{461A2C20-A2B2-41E5-BF79-E3998CB807EA} = {CE6CDF42-A288-4107-A23F-0367B166FE90}
 	EndGlobalSection
 EndGlobal
