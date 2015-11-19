@@ -9,7 +9,6 @@
         public string OriginalFileName { get; set; }
 
         [Required]
-
         public string FileExtension { get; set; }
 
         [Required]

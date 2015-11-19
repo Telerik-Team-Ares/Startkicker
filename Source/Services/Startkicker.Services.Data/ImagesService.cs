@@ -61,7 +61,6 @@
             image.IsRemoved = true;
             this.imagesRepo.Update(image);
             this.imagesRepo.SaveChanges();
-
         }
 
         public async Task<string> UploadAsync(byte[] content, string extension)

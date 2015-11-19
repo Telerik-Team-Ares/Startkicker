@@ -2,24 +2,18 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Net;
-    using System.Net.Http;
     using System.Web.Http;
-
-    using Ninject.Infrastructure.Language;
+    
     using Microsoft.AspNet.Identity;
 
     using Startkicker.Api.Common.Contracts;
     using Startkicker.Api.Infrastructure.ActionFilters;
-    using Startkicker.Api.Infrastructure.Helpers;
     using Startkicker.Api.Models.Request.Projects;
     using Startkicker.Api.Models.Response.Projects;
     using Startkicker.Data.Models;
     using Startkicker.Services.Data.Contracts;
-
-    using WebGrease.Css.Extensions;
+    
     using System.Threading.Tasks;
 
     [RoutePrefix("api/Projects")]
@@ -50,36 +44,18 @@
             {
                 ProjectDescriptionResponseModel result = new ProjectDescriptionResponseModel
                 {
-                    CategoryName =
-                                                                    projectDataModel
-                                                                     .Category.Name,
-                    Name =
-                                                                     projectDataModel
-                                                                     .Name,
-                    CollectedMoney =
-                                                                     projectDataModel
-                                                                     .CollectedMoney,
-                    Contributors =
-                                                                     projectDataModel
-                                                                     .Contributors
-                                                                     .Select(
-                                                                         x =>
-                                                                         x.User.UserName)
-                                                                     .ToList<string>(),
-                    Description =
-                                                                     projectDataModel
-                                                                     .Description,
-                    EstimatedDate =
-                                                                     projectDataModel
-                                                                     .EstimatedDate,
-                    GoalMoney =
-                                                                     projectDataModel
-                                                                     .GoalMoney,
+                    CategoryName = projectDataModel.Category.Name,
+                    Name = projectDataModel.Name,
+                    CollectedMoney = projectDataModel.CollectedMoney,
+                    Contributors = projectDataModel.Contributors
+                        .Select(x => x.User.UserName)
+                        .ToList<string>(),
+                    Description = projectDataModel.Description,
+                    EstimatedDate = projectDataModel.EstimatedDate,
+                    GoalMoney = projectDataModel.GoalMoney,
                     //InnovatorId = "2",
                     Innovator = projectDataModel.Innovator.UserName,
-                    IsClosed =
-                                                                     projectDataModel
-                                                                     .IsClosed,
+                    IsClosed = projectDataModel.IsClosed,
                 };
 
                 return this.Ok(result);
@@ -120,10 +96,6 @@
             projectToAdd.Images = projectImages;
 
             this.projects.Add(projectToAdd);
-
-            // TODO: Remove this (just for testing)
-            this.publisher.Emit("new-project-added", string.Format("New project was created!"));
-
             return this.Ok();
         }
 
@@ -150,8 +122,7 @@
 
             return this.Ok(projectsList);
         }
-
-
+        
         //[Route("ProjectAddMoney")]
         //[Authorize]
         //[DecryptInputId]
@@ -162,7 +133,11 @@
         {
             string userId = this.User.Identity.GetUserId();
 
-            var result = this.projects.AddMoney(int.Parse(moneyRequestModel.Id), moneyRequestModel.MoneyAmount, userId);
+            var result = this.projects.AddMoney(
+                int.Parse(moneyRequestModel.Id), 
+                moneyRequestModel.MoneyAmount, 
+                userId);
+
             if (result == 1)
             {
                 return this.Ok("Your money support was verified!");
