@@ -48,6 +48,11 @@
 				controller: 'UserProfileController',
 				controllerAs: 'vm',
 			})
+			.when('/discover', {
+				templateUrl: 'templates/discover-categories.html',
+				controller: 'CategoriesController',
+				controllerAs: 'vm',
+			})
 			.otherwise({ redirectTo: '/' });
 	}
 

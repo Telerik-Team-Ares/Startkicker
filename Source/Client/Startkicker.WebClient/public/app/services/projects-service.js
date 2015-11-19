@@ -54,10 +54,26 @@
 			return deferred.promise;
 		}
 
+		function getByCategory(categoryId){
+			var url = ApiBaseUrl + '/projects?categoryId=' + id,
+				deferred = $q.defer();
+
+			$http
+				.get(url)
+				.then(function(response) {
+					deferred.resolve(response.data);
+				}, function(err) {
+					deferred.reject(err);
+				});
+
+			return deferred.promise;
+		}
+
 		return {
 			add: add,
 			getAll: getAll,
-			getById: getById
+			getById: getById,
+			getByCategory: getByCategory
 		};
 	}
 }());
