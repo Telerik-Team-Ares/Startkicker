@@ -2,6 +2,7 @@
 {
     using Data.Models;
     using System;
+    using System.Linq;
     using System.Linq.Expressions;
 
     public class ProjectListItemResponseModel
@@ -16,7 +17,8 @@
                     Name = pr.Name,
                     GoalMoney = pr.GoalMoney,
                     EstimatedDate = pr.EstimatedDate,
-                    CollectedMoney = pr.CollectedMoney
+                    CollectedMoney = pr.CollectedMoney,
+                    ImageUrl = pr.Images.FirstOrDefault().ImageUrl
                 };
             }
         }
@@ -30,5 +32,7 @@
         public int GoalMoney { get; set; }
 
         public int CollectedMoney { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }

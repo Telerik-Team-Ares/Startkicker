@@ -33,15 +33,8 @@
                 MoneyAmount = user.MoneyAmount
             };
 
-            var projects = user.InnovationProjects.Select(x => new ProjectListItemResponseModel
-                                                                   {
-                                                                       Name = x.Name,
-                                                                       CollectedMoney = x.CollectedMoney,
-                                                                       GoalMoney = x.GoalMoney,
-                                                                       EstimatedDate = x.EstimatedDate,
-                                                                       Id = x.Id.ToString()
-                                                                   }).ToList();
-
+            var projects = user.InnovationProjects.AsQueryable().Select(ProjectListItemResponseModel.FromModel).ToList();
+            
             userDetails.Projects = projects;
 
             return this.Ok(userDetails);
