@@ -24,11 +24,11 @@
             return this.projectsRepo.All().Where(pr => pr.Id == id);
         }
 
-        public IQueryable<Project> GetByCategory(int categoryId)
+        public IQueryable<Project> GetByCategory(string categoryName)
         {
             return
                 this.projectsRepo.All()
-                    .Where(x => (!x.IsRemoved) && x.CategoryId == categoryId)
+                    .Where(x => (!x.IsRemoved) && x.Category.Name == categoryName)
                     .OrderByDescending(c => c.Name);
             //.Skip((page - 1) * pageSize)
             //.Take(pageSize)

@@ -11,7 +11,7 @@
 
         IQueryable<Project> GetAll();
 
-        IQueryable<Project> GetByCategory(int categoryId);
+        IQueryable<Project> GetByCategory(string categoryName);
 
         int Add(string name, string description, int goalMoney, int estimatedDays, int categoryId, string userId, ICollection<Image> images);
 

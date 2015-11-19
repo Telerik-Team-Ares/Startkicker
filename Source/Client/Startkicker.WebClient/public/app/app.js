@@ -53,10 +53,10 @@
 				controller: 'ExploreController',
 				controllerAs: 'vm',
 			})
-			.when('/projects/explore/:id', {
+			.when('/projects/explore/:category', {
 				templateUrl: 'templates/explore-category.html',
-				// controller: 'ExploreController',
-				// controllerAs: 'vm',
+				controller: 'ExploreCategoryController',
+				controllerAs: 'vm',
 			})
 			// .otherwise({ redirectTo: '/' });
 	}

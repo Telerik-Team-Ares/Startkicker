@@ -54,8 +54,8 @@
 			return deferred.promise;
 		}
 
-		function getByCategory(categoryId){
-			var url = ApiBaseUrl + '/projects?categoryId=' + id,
+		function getByCategory(category) {
+			var url = ApiBaseUrl + '/projects?category=' + category,
 				deferred = $q.defer();
 
 			$http

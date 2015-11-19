@@ -49,10 +49,10 @@
 
         [HttpGet]
        // [Authorize]
-        public IHttpActionResult GetByCategory(int categoryId, int page = 1)
+        public IHttpActionResult GetByCategory(string category, int page = 1)
         {
             var result = this.projects
-               .GetByCategory(categoryId)
+               .GetByCategory(category)
                .Skip((page - 1) * 10)
                .Take(10)
                .Select(ProjectListItemResponseModel.FromModel)
