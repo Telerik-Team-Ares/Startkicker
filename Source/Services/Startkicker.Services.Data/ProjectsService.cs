@@ -24,18 +24,24 @@
             return this.projectsRepo.All().Where(pr => pr.Id == id);
         }
 
-        public IQueryable<Project> GetAll(int page = 1, int pageSize = 10)
+        public IQueryable<Project> GetByCategory(int categoryId)
         {
-            return this.projectsRepo
-                .All()
-                .Where(x => (!x.IsRemoved))
-                .OrderByDescending(c => c.Name)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Where(x=> x.IsRemoved == false);
+            return
+                this.projectsRepo.All()
+                    .Where(x => (!x.IsRemoved) && x.CategoryId == categoryId)
+                    .OrderByDescending(c => c.Name);
+            //.Skip((page - 1) * pageSize)
+            //.Take(pageSize)
+
         }
 
-    
+        public IQueryable<Project> GetAll()
+        {
+            return this.projectsRepo.All().Where(x => (!x.IsRemoved)).OrderByDescending(c => c.Name);
+
+        }
+
+
         public int Add(string name, string description, int goalMoney, int estimatedDays, int categoryId, string userId, ICollection<Image> images)
         {
             var projectToAdd = new Project
@@ -100,7 +106,7 @@
             if (projectToUpdate == null)
             {
                 throw new ArgumentOutOfRangeException("Could not find the project. Make sure the ID is correct!");
-               // return -1;
+                // return -1;
             }
 
             projectToUpdate.CollectedMoney += amount;

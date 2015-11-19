@@ -1,5 +1,5 @@
 ﻿namespace Startkicker.Api.Controllers
-{   
+{
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -47,6 +47,20 @@
             return this.Ok(result);
         }
 
+        [HttpGet]
+       // [Authorize]
+        public IHttpActionResult GetByCategory(int categoryId, int page = 1)
+        {
+            var result = this.projects
+               .GetByCategory(categoryId)
+               .Skip((page - 1) * 10)
+               .Take(10)
+               .Select(ProjectListItemResponseModel.FromModel)
+               .ToList();
+
+            return this.Ok(result);
+        }
+
         [HttpPost]
         [ValidateModelState]
         [CheckModelForNull]
@@ -61,7 +75,7 @@
                 var imageUrl = await images.UploadAsync(image.ByteArrayContent, image.FileExtension);
                 projectImages.Add(new Image { ImageUrl = imageUrl });
             }
-            
+
             int projectId = this.projects
                 .Add(project.Name, project.Description, project.GoalMoney, project.EstimatedDays, project.CategoryId, projectUserId, projectImages);
 
@@ -70,10 +84,12 @@
 
         [HttpGet]
         [ValidateModelState]
-        public IHttpActionResult GetAll(int? page)
+        public IHttpActionResult GetAll(int page = 1)
         {
             var result = this.projects
-                .GetAll(1, 10)
+                .GetAll()
+                .Skip((page - 1) * 10)
+                .Take(10)
                 .Select(ProjectListItemResponseModel.FromModel)
                 .ToList();
 
@@ -88,8 +104,8 @@
             string userId = this.User.Identity.GetUserId();
 
             var result = this.projects.AddMoney(
-                int.Parse(moneyRequestModel.Id), 
-                moneyRequestModel.MoneyAmount, 
+                int.Parse(moneyRequestModel.Id),
+                moneyRequestModel.MoneyAmount,
                 userId);
 
             if (result == 1)
