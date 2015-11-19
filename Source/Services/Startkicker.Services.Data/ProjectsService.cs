@@ -1,17 +1,16 @@
 ﻿namespace Startkicker.Services.Data
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     using Startkicker.Data.Models;
     using Startkicker.Data.Repositories;
     using Startkicker.Services.Data.Contracts;
+    using System.Collections.Generic;
+    using System;
 
     public class ProjectsService : IProjectsService
     {
         private readonly IRepository<Project> projectsPepo;
-
         private readonly IRepository<User> usersRepo;
 
         public ProjectsService(IRepository<Project> projectsRepo, IRepository<User> usersRepo)
@@ -20,30 +19,41 @@
             this.usersRepo = usersRepo;
         }
 
-        public Project GetById(int id)
+        public IQueryable<Project> GetById(int id)
         {
-            Project result = this.projectsPepo.GetById(id);
-            if (result != null && !result.IsRemoved)
-            {
-                return result;
-            }
-
-            return null;
+            return this.projectsPepo.All().Where(pr => pr.Id == id);
         }
 
         public IQueryable<Project> GetAll(int page = 1, int pageSize = 10)
         {
             return this.projectsPepo
                 .All()
+                .Where(x => (!x.IsRemoved))
                 .OrderByDescending(c => c.Name)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize);
         }
 
-        public void Add(Project project)
+        public int Add(string name, string description, int goalMoney, int estimatedDays, int categoryId, string userId, ICollection<Image> images)
         {
-            this.projectsPepo.Add(project);
+            var projectToAdd = new Project
+            {
+                EstimatedDate = DateTime.Now.AddDays(estimatedDays),
+                Name = name,
+                Description = description,
+                GoalMoney = goalMoney,
+                CategoryId = categoryId,
+                InnovatorId = userId,
+                Images = images,
+                IsRemoved = false,
+                IsClosed = false,
+                CollectedMoney = 0
+            };
+
+            this.projectsPepo.Add(projectToAdd);
             this.projectsPepo.SaveChanges();
+
+            return projectToAdd.Id;
         }
 
         public void Update(Project project)

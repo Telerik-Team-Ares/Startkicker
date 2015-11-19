@@ -14,8 +14,7 @@
 
             if (!modelState.IsValid)
             {
-                actionContext.Response = actionContext.Request.CreateErrorResponse(
-       HttpStatusCode.BadRequest, actionContext.ModelState);
+                actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, actionContext.ModelState);
             }
         }
     }

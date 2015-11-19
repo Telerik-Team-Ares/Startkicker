@@ -1,17 +1,17 @@
 ﻿namespace Startkicker.Services.Data.Contracts
 {
-    using System.Collections.Generic;
     using System.Linq;
 
     using Startkicker.Data.Models;
+    using System.Collections.Generic;
 
     public interface IProjectsService
     {
-        Project GetById(int id);
+        IQueryable<Project> GetById(int id);
 
-        IQueryable<Project> GetAll(int page = 1, int pageSize = 10);
+        IQueryable<Project> GetAll(int page, int pageSize);
 
-        void Add(Project project);
+        int Add(string name, string description, int goalMoney, int estimatedDays, int categoryId, string userId, ICollection<Image> images);
 
         int AddMoney(int projectId, int amount, string userId);
 

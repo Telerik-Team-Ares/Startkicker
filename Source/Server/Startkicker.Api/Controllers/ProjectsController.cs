@@ -1,160 +1,86 @@
 ﻿namespace Startkicker.Api.Controllers
-{
-    using System;
+{   
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Net;
-    using System.Net.Http;
+    using System.Threading.Tasks;
     using System.Web.Http;
 
-    using Ninject.Infrastructure.Language;
     using Microsoft.AspNet.Identity;
 
     using Startkicker.Api.Common.Contracts;
     using Startkicker.Api.Infrastructure.ActionFilters;
-    using Startkicker.Api.Infrastructure.Helpers;
     using Startkicker.Api.Models.Request.Projects;
     using Startkicker.Api.Models.Response.Projects;
     using Startkicker.Data.Models;
     using Startkicker.Services.Data.Contracts;
 
-    using WebGrease.Css.Extensions;
-    using System.Threading.Tasks;
-
     [RoutePrefix("api/Projects")]
     public class ProjectsController : ApiController
     {
         private readonly IProjectsService projects;
+        private readonly IUsersService users;
         private readonly IImagesService images;
         private readonly IPublisher publisher;
 
-        public ProjectsController(IProjectsService projects, IImagesService images, IPublisher publisher)
+        public ProjectsController(IProjectsService projects, IUsersService users, IImagesService images, IPublisher publisher)
         {
             this.projects = projects;
+            this.users = users;
             this.images = images;
             this.publisher = publisher;
         }
 
         [HttpGet]
-        //[Route("GetById")]
-        //[Authorize]
-        //[DecryptInputId]
-        //[EncryptResultIds]
-        //[Route("projects")]
-        public IHttpActionResult GetById(string id)
+        [Authorize]
+        public IHttpActionResult GetById(int id)
         {
-            int idTo = int.Parse(id);
-            Project projectDataModel = this.projects.GetById(idTo);
-            if (projectDataModel != null)
-            {
-                ProjectDescriptionResponseModel result = new ProjectDescriptionResponseModel
-                {
-                    CategoryName =
-                                                                    projectDataModel
-                                                                     .Category.Name,
-                    Name =
-                                                                     projectDataModel
-                                                                     .Name,
-                    CollectedMoney =
-                                                                     projectDataModel
-                                                                     .CollectedMoney,
-                    Contributors =
-                                                                     projectDataModel
-                                                                     .Contributors
-                                                                     .Select(
-                                                                         x =>
-                                                                         x.User.UserName)
-                                                                     .ToList<string>(),
-                    Description =
-                                                                     projectDataModel
-                                                                     .Description,
-                    EstimatedDate =
-                                                                     projectDataModel
-                                                                     .EstimatedDate,
-                    GoalMoney =
-                                                                     projectDataModel
-                                                                     .GoalMoney,
-                    //InnovatorId = "2",
-                    Innovator = projectDataModel.Innovator.UserName,
-                    IsClosed =
-                                                                     projectDataModel
-                                                                     .IsClosed,
-                };
+            var result = this.projects
+                .GetById(id)
+                .Select(ProjectDescriptionResponseModel.FromModel)
+                .FirstOrDefault();
 
-                return this.Ok(result);
+            if (result == null)
+            {
+                return this.BadRequest("Project was not found!");
             }
 
-            return this.BadRequest("Project was not found!");
+            return this.Ok(result);
         }
 
-        // [Route("Add")]
         [HttpPost]
         [ValidateModelState]
         [CheckModelForNull]
-        //[DecryptInputId]
         [Authorize]
-        public async Task<IHttpActionResult> Add(NewProjectRequestModel projectModel)
+        public async Task<IHttpActionResult> Add(NewProjectRequestModel project)
         {
-            var projectToAdd = new Project
-            {
-                EstimatedDate = DateTime.Now.AddDays(projectModel.EstimatedDays),
-                Name = projectModel.Name,
-                IsRemoved = false,
-                IsClosed = false,
-                CollectedMoney = 0,
-                Description = projectModel.Description,
-                GoalMoney = projectModel.GoalMoney,
-                InnovatorId = this.User.Identity.GetUserId(),
-                CategoryId = projectModel.CategoryId,
-            };
-
+            string projectUserId = this.User.Identity.GetUserId();
             var projectImages = new List<Image>();
 
-            foreach (var image in projectModel.Images)
+            foreach (var image in project.Images)
             {
                 var imageUrl = await images.UploadAsync(image.ByteArrayContent, image.FileExtension);
                 projectImages.Add(new Image { ImageUrl = imageUrl });
             }
+            
+            int projectId = this.projects
+                .Add(project.Name, project.Description, project.GoalMoney, project.EstimatedDays, project.CategoryId, projectUserId, projectImages);
 
-            projectToAdd.Images = projectImages;
-
-            this.projects.Add(projectToAdd);
-
-            // TODO: Remove this (just for testing)
-            this.publisher.Emit("new-project-added", string.Format("New project was created!"));
-
-            return this.Ok();
+            return this.Ok(projectId);
         }
 
         [HttpGet]
         [ValidateModelState]
-        // [EncryptResultIds]
-        //  [Route("projects/getAll")]
-        public IHttpActionResult GetAll(int page = 1, int size = 10)
+        public IHttpActionResult GetAll(int? page)
         {
-            ICollection<ProjectListItemResponseModel> projectsList =
-                this.projects.GetAll(page, size)
-                    .Where(x => (!x.IsRemoved))
-                    .Select(
-                        y =>
-                        new ProjectListItemResponseModel
-                        {
-                            Id = y.Id.ToString(),
-                            Name = y.Name,
-                            GoalMoney = y.GoalMoney,
-                            EstimatedDate = y.EstimatedDate,
-                            CollectedMoney = y.CollectedMoney
-                        })
-                    .ToList<ProjectListItemResponseModel>();
+            var result = this.projects
+                .GetAll(1, 10)
+                .Select(ProjectListItemResponseModel.FromModel)
+                .ToList();
 
-            return this.Ok(projectsList);
+            return this.Ok(result);
         }
 
 
-        //[Route("ProjectAddMoney")]
-        //[Authorize]
-        //[DecryptInputId]
         [HttpPut]
         [ValidateModelState]
         [CheckModelForNull]
@@ -177,7 +103,6 @@
         }
 
         [HttpDelete]
-        // [DecryptInputId]
         public IHttpActionResult Remove(string id)
         {
             int idToInt = int.Parse(id);

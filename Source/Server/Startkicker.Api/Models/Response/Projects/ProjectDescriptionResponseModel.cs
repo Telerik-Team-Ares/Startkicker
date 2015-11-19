@@ -2,11 +2,30 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
 
     using Startkicker.Data.Models;
 
     public class ProjectDescriptionResponseModel
     {
+        public static Expression<Func<Project, ProjectDescriptionResponseModel>> FromModel
+        {
+            get
+            {
+                return pr => new ProjectDescriptionResponseModel
+                {
+                    CategoryName = pr.Category.Name,
+                    Name = pr.Name,
+                    CollectedMoney = pr.CollectedMoney,
+                    Description = pr.Description,
+                    EstimatedDate = pr.EstimatedDate,
+                    GoalMoney = pr.GoalMoney,
+                    Innovator = pr.Innovator.UserName,
+                    IsClosed = pr.IsClosed
+                };
+            }
+        }
+
         public string Name { get; set; }
 
         public DateTime EstimatedDate { get; set; }
@@ -24,8 +43,6 @@
         public string Innovator { get; set; }
 
         public ICollection<Image> Images { get; set; }
-
-        public ICollection<string> Contributors { get; set; }
 
         public string CategoryName { get; set; }
     }
