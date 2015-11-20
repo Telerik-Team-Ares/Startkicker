@@ -23,10 +23,14 @@
                     GoalMoney = pr.GoalMoney,
                     Innovator = pr.Innovator.UserName,
                     IsClosed = pr.IsClosed,
-                    Images = pr.Images.Select(im => im.ImageUrl).ToList()
+                    Images = pr.Images.Select(im => im.ImageUrl).ToList(),
+                    Id = pr.Id
+
                 };
             }
         }
+
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

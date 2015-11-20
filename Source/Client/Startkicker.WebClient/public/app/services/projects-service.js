@@ -69,11 +69,27 @@
 			return deferred.promise;
 		}
 
+		function donate(donation){
+			var url = ApiBaseUrl + '/projects',
+				deferred = $q.defer();
+
+			$http
+				.put(url, donation)
+				.then(function(response) {
+					deferred.resolve(response.data);
+				}, function(err) {
+					deferred.reject(err);
+				});
+
+			return deferred.promise;
+		}
+
 		return {
 			add: add,
 			getAll: getAll,
 			getById: getById,
-			getByCategory: getByCategory
+			getByCategory: getByCategory,
+			donate:donate
 		};
 	}
 }());

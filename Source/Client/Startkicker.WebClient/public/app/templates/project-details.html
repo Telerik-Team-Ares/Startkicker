@@ -16,22 +16,11 @@
 		<div class="progress">
 			<div class="progress-bar progress-bar-success" style="width: {{vm.project.collectedMoney/vm.project.goalMoney * 100}}%"></div>
 		</div>
-		<button class="btn btn-success">Donate</button>
+		<input type="number" ng-model="vm.donation.moneyAmount" placeholder="Amount" min="0"/>
+		<button ng-click="vm.donate(vm.donation)" class="btn btn-success">Donate</button>
 	</div>
 	<hr>
 	<div class="row">
 		<p>{{ vm.project.description }}</p>
 	</div>
 </div>
-<!-- <div class="col-md-5">
-		<h4><strong>Completed</strong></h4>
-		<h4><strong>Collected</strong></h4>
-		<h4><strong>Goal</strong></h4>
-		<h4><strong>Estimated date</strong></h4>
-</div>
-<div class="col-md-5">
-		<h4><strong>{{ project.collectedMoney / project.goalMoney * 100 | number:2 }} %</strong></h4>
-		<h4><strong>{{ project.collectedMoney }} $</strong></h4>
-		<h4><strong>{{ project.goalMoney }} $</strong></h4>
-		<h4><strong>{{ project.estimatedDate | date}}</strong></h4>
-</div> -->
