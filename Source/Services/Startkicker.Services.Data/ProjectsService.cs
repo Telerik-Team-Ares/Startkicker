@@ -91,9 +91,7 @@
 
             if (user == null)
             {
-                //return -1;
-
-                throw new UnauthorizedAccessException("User could not be found");
+                throw new UnauthorizedAccessException("User could not be found!");
             }
 
             if ((user.MoneyAmount - amount) <= 0)
@@ -106,7 +104,11 @@
             if (projectToUpdate == null)
             {
                 throw new ArgumentOutOfRangeException("Could not find the project. Make sure the ID is correct!");
-                // return -1;
+            }
+
+            if (projectToUpdate.InnovatorId == userId)
+            {
+                throw new UnauthorizedAccessException("User could not fund own project!");
             }
 
             projectToUpdate.CollectedMoney += amount;

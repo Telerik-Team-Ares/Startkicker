@@ -1,5 +1,6 @@
 ﻿namespace Startkicker.Api.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -48,7 +49,7 @@
         }
 
         [HttpGet]
-       // [Authorize]
+        // [Authorize]
         public IHttpActionResult GetByCategory(string category, int page = 1)
         {
             var result = this.projects
@@ -103,22 +104,19 @@
         {
             string userId = this.User.Identity.GetUserId();
 
-            var result = this.projects.AddMoney(
-                int.Parse(moneyRequestModel.Id),
-                moneyRequestModel.MoneyAmount,
-                userId);
-
-            if (result == 1)
+            try
             {
-                return this.Ok("Your money support was verified!");
+                var result = this.projects.AddMoney(
+                    int.Parse(moneyRequestModel.Id),
+                    moneyRequestModel.MoneyAmount,
+                    userId);
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
             }
 
-            if (result == -1)
-            {
-                return this.BadRequest("You are not allowed for this opperation!");
-            }
-
-            return this.BadRequest("You have no enough money for this donation to be processed! Please chose available amount!");
+            return this.Ok();
         }
 
         [HttpDelete]

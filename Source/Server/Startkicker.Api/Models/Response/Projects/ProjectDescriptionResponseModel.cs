@@ -21,10 +21,13 @@
                     EstimatedDate = pr.EstimatedDate,
                     GoalMoney = pr.GoalMoney,
                     Innovator = pr.Innovator.UserName,
-                    IsClosed = pr.IsClosed
+                    IsClosed = pr.IsClosed,
+                    Id = pr.Id
                 };
             }
         }
+
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
