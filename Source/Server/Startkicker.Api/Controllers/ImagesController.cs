@@ -21,7 +21,7 @@
         }
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IHttpActionResult> Add(NewImagesRequestModel model)
         {
             string imageUrl = await images.UploadAsync(model.ByteArrayContent, model.FileExtension);
@@ -29,7 +29,6 @@
                 new Image
                 {
                     ImageUrl = imageUrl,
-                    //ProjectId = model.ProjectId,
                     IsRemoved = false
                 });
 
@@ -37,7 +36,7 @@
         }
 
         [HttpDelete]
-        //[Authorize]
+        [Authorize]
         public async Task<IHttpActionResult> Remove(DeleteImageRequestModel model)
         {
             var image = this.images.GetByUrl(model.ImageUrl);

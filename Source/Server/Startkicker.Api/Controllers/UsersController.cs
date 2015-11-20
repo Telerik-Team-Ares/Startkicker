@@ -20,7 +20,6 @@
         }
 
         [HttpGet]
-        //[Authorize]
         public IHttpActionResult Profile(string userName)
         {
             var user = this.users.GetByUserName(userName);

@@ -20,7 +20,7 @@
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public IHttpActionResult GetById(int id)
         {
             var result = this.categories
@@ -79,6 +79,7 @@
         }
 
         [HttpDelete]
+        [Authorize]
         public IHttpActionResult Remove(int id)
         {
             this.categories.Remove(id);

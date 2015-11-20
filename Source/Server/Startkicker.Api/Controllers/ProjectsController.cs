@@ -32,7 +32,6 @@
         }
 
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetById(int id)
         {
             var result = this.projects
@@ -49,7 +48,7 @@
         }
 
         [HttpGet]
-        // [Authorize]
+        [CheckModelForNull]
         public IHttpActionResult GetByCategory(string category, int page = 1)
         {
             var result = this.projects
@@ -100,6 +99,7 @@
         [HttpPut]
         [ValidateModelState]
         [CheckModelForNull]
+        [Authorize]
         public IHttpActionResult AddMoney(AddProjectMoneyRequestModel moneyRequestModel)
         {
             string userId = this.User.Identity.GetUserId();
@@ -120,6 +120,8 @@
         }
 
         [HttpDelete]
+        [Authorize]
+        [CheckModelForNull]
         public IHttpActionResult Remove(string id)
         {
             int idToInt = int.Parse(id);

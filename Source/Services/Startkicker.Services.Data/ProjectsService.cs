@@ -30,8 +30,6 @@
                 this.projectsRepo.All()
                     .Where(x => (!x.IsRemoved) && x.Category.Name == categoryName)
                     .OrderByDescending(c => c.Name);
-            //.Skip((page - 1) * pageSize)
-            //.Take(pageSize)
 
         }
 
@@ -96,7 +94,7 @@
 
             if ((user.MoneyAmount - amount) <= 0)
             {
-                return 0;
+                throw new UnauthorizedAccessException("User have no enough money to proceed this opertion!");
             }
 
             Project projectToUpdate = this.projectsRepo.GetById(projectId);
