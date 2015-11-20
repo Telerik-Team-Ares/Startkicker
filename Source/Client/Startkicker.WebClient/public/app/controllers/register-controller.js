@@ -5,7 +5,7 @@
 		.module('Startkicker.controllers')
 		.controller('RegisterController', registerController);
 
-	registerController.$inject = ['$location', 'auth', 'notifier','showServerErrors'];
+	registerController.$inject = ['$location', 'auth', 'notifier', 'showServerErrors'];
 
 	function registerController($location, auth, notifier, showServerErrors) {
 		var vm = this;
@@ -18,7 +18,7 @@
 				.then(function() {
 					$location.path('/');
 					notifier.success('Registration successfully!');
-				}, function(error){
+				}, function(error) {
 					showServerErrors.all(error);
 				});
 		};

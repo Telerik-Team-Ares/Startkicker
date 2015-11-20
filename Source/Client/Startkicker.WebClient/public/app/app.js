@@ -63,7 +63,7 @@
 				controller: 'CategoriesController',
 				controllerAs: 'vm',
 			})
-			// .otherwise({ redirectTo: '/' });
+			.otherwise({ redirectTo: '/' });
 	}
 
 	function checkForLoggedUser(identity, $http) {

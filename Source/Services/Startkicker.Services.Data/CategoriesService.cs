@@ -15,17 +15,11 @@
             this.categoriesRepo = categoriesRepo;
         }
 
-        public Category GetById(int id)
+        public IQueryable<Category> GetById(int id)
         {
-            Category result = this.categoriesRepo.GetById(id);
-            if (result != null && !result.IsRemoved)
-            {
-                return result;
-            }
-
-            return null;
+            return this.categoriesRepo.All().Where(c => c.Id == id);
         }
-
+        
         public IQueryable<Category> GetPage(int page = 1, int pageSize = 10)
         {
             return this.categoriesRepo
@@ -37,11 +31,13 @@
 
         public IQueryable<Category> GetAll()
         {
-            return this.categoriesRepo.All();
+            return this.categoriesRepo.All().Where(x => (!x.IsRemoved));
         }
 
-        public int Add(Category category)
+        public int Add(string categoryName)
         {
+            var category = new Category { Name = categoryName };
+
             if (this.categoriesRepo.All().Any(c => c.Name == category.Name))
             {
                 return -1;
@@ -59,8 +55,10 @@
             return category.Id;
         }
 
-        public void Remove(Category category)
+        public void Remove(int id)
         {
+            var category = this.categoriesRepo.GetById(id);
+
             category.IsRemoved = true;
             this.categoriesRepo.Update(category);
             this.categoriesRepo.SaveChanges();

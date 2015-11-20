@@ -5,9 +5,9 @@
 		.module('Startkicker.services')
 		.factory('auth', auth);
 
-	auth.$inject = ['$http', '$q', 'BaseUrl', 'ApiBaseUrl', 'identity'];
+	auth.$inject = ['$http', '$q', '$window', 'BaseUrl', 'ApiBaseUrl', 'identity'];
 
-	function auth($http, $q, BaseUrl, ApiBaseUrl, identity) {
+	function auth($http, $q, $window, BaseUrl, ApiBaseUrl, identity) {
 		function registerUser(user) {
 			var url = ApiBaseUrl + '/account/register',
 				deferred = $q.defer();
@@ -48,7 +48,8 @@
 
 		function logoutUser() {
 			identity.removeLoggedUser();
-			$http.defaults.headers.common.Authorization = '';
+			$http.defaults.headers.common.Authorization = null;
+			$window.location.reload();
 		}
 
 		return {

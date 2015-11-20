@@ -18,8 +18,8 @@
 			<span class="input-group-addon"><span class=" glyphicon glyphicon-folder-open"></span></span>
 			<input type="text" class="form-control" value="{{ category.name }}" disabled>
 			<span class="input-group-btn">
-				<button class="btn btn-danger" type="button">
-				<span class="glyphicon glyphicon-trash"></span>
+				<button ng-click="vm.removeCategory(category.id, $index)" class="btn btn-danger" type="button">
+					<span class="glyphicon glyphicon-trash"></span>
 				</button>
 			</span>
 		</div>
