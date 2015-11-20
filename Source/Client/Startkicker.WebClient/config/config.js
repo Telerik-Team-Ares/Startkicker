@@ -7,7 +7,7 @@ var rootPath = path.normalize(__dirname + '/..');
 module.exports = {
 	development: {
 		rootPath: rootPath,
-		port: 8080
+		port: 3030
 	},
 	production: {
 		rootPath: rootPath,

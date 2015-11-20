@@ -5,9 +5,9 @@
 		.module('Startkicker.services')
 		.factory('auth', auth);
 
-	auth.$inject = ['$http', '$q', '$window', 'BaseUrl', 'ApiBaseUrl', 'identity'];
+	auth.$inject = ['$http', '$q', '$window', 'BaseUrl', 'ApiBaseUrl', 'identity', 'pubnub'];
 
-	function auth($http, $q, $window, BaseUrl, ApiBaseUrl, identity) {
+	function auth($http, $q, $window, BaseUrl, ApiBaseUrl, identity, pubnub) {
 		function registerUser(user) {
 			var url = ApiBaseUrl + '/account/register',
 				deferred = $q.defer();
@@ -37,6 +37,14 @@
 					};
 
 					identity.saveLoggedUser(loggedUser);
+
+					pubnub.subscribe({
+						channel: loggedUser.username,
+						callback: function (message) {
+							toastr.success(message);
+						}
+					});
+
 					deferred.resolve(loggedUser);
 					$http.defaults.headers.common.Authorization = 'Bearer ' + response.data.access_token;
 				}, function(err) {

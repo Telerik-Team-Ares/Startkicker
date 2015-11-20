@@ -8,9 +8,10 @@
 	angular
 		.module('Startkicker', ['ngRoute', 'Startkicker.controllers', 'Startkicker.services', 'Startkicker.directives'])
 		.config(routesConfig)
-		.run(['identity', '$http', checkForLoggedUser])
+		.run(['identity', 'pubnub', '$http', checkForLoggedUser])
 		.run(['categories', cashCategories])
 		.value('toastr', toastr)
+		.value('pubnub', PUBNUB)
 		.constant('BaseUrl', 'http://localhost:50777')
 		.constant('ApiBaseUrl', 'http://localhost:50777/api');
 
@@ -66,12 +67,19 @@
 			.otherwise({ redirectTo: '/' });
 	}
 
-	function checkForLoggedUser(identity, $http) {
+	function checkForLoggedUser(identity, pubnub, $http) {
 		var token = identity.getAccessToken();
 
 		if (!!token) {
 			$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 		}
+
+		pubnub.subscribe({
+			channel: identity.getUsername(),
+			callback: function (message) {
+				toastr.success(message);
+			}
+		});
 	}
 
 	function cashCategories(categories) {

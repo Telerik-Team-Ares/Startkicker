@@ -10,7 +10,7 @@
 	function users($http, $q, ApiBaseUrl) {
 
 		function get(userName) {
-			var url = ApiBaseUrl + '/users/profile?userName='+userName,
+			var url = ApiBaseUrl + '/users/profile?userName=' + userName,
 				deferred = $q.defer();
 
 			$http

@@ -271,6 +271,7 @@
     <Compile Include="Models\Response\Account\UserInfoViewModel.cs" />
     <Compile Include="Models\Response\Account\UserLoginInfoViewModel.cs" />
     <Compile Include="Models\Response\Categories\CategoryDescriptionResponseModel.cs" />
+    <Compile Include="Models\Response\Donations\DonationResponseModel.cs" />
     <Compile Include="Models\Response\Projects\ProjectDescriptionResponseModel.cs" />
     <Compile Include="Models\Response\Projects\ProjectListItemResponseModel.cs" />
     <Compile Include="Models\Response\Users\UserDetailsResponseModel.cs" />
