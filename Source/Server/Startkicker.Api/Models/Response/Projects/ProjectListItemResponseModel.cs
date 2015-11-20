@@ -15,6 +15,8 @@
                 {
                     Id = pr.Id.ToString(),
                     Name = pr.Name,
+                    Category = pr.Category.Name,
+                    Innovator = pr.Innovator.UserName,
                     GoalMoney = pr.GoalMoney,
                     EstimatedDate = pr.EstimatedDate,
                     CollectedMoney = pr.CollectedMoney,
@@ -26,6 +28,10 @@
         public string Id { get; set; }
 
         public string Name { get; set; }
+
+        public string Category { get; set; }
+
+        public string Innovator { get; set; }
 
         public DateTime EstimatedDate { get; set; }
 

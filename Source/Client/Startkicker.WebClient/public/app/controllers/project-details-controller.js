@@ -14,6 +14,7 @@
 			.getById($routeParams.id)
 			.then(function(response) {
 				vm.project = response;
+				console.log(response);
 			}, function(error) {
 				showServerErrors.all(error);
 			});

@@ -14,6 +14,7 @@
 			.getAll()
 			.then(function(response) {
 				vm.projects = response;
+				console.log(vm.projects);
 			});
 	}
 }());
