@@ -103,11 +103,12 @@
         public IHttpActionResult AddMoney(AddProjectMoneyRequestModel moneyRequestModel)
         {
             string userId = this.User.Identity.GetUserId();
+            int projectId = int.Parse(moneyRequestModel.Id);
 
             try
             {
                 var result = this.projects.AddMoney(
-                    int.Parse(moneyRequestModel.Id),
+                    projectId,
                     moneyRequestModel.MoneyAmount,
                     userId);
             }
@@ -115,6 +116,11 @@
             {
                 return this.BadRequest(ex.Message);
             }
+
+            var ownerUsername = this.projects.GetById(projectId).Select(p => p.Innovator.UserName).FirstOrDefault();
+            var projectName = this.projects.GetById(projectId).Select(p => p.Name).FirstOrDefault();
+            
+            this.publisher.Emit(ownerUsername, string.Format("Your project: {0} was funded with {1} $", projectName, moneyRequestModel.MoneyAmount));
 
             return this.Ok();
         }

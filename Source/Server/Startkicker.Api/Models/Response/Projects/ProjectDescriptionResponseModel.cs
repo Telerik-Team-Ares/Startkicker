@@ -2,10 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
 
+    using Startkicker.Api.Models.Response.Donations;
     using Startkicker.Data.Models;
-    using System.Linq;
 
     public class ProjectDescriptionResponseModel
     {
@@ -24,8 +25,8 @@
                     Innovator = pr.Innovator.UserName,
                     IsClosed = pr.IsClosed,
                     Images = pr.Images.Select(im => im.ImageUrl).ToList(),
-                    Id = pr.Id
-
+                    Id = pr.Id,
+                    Donations = pr.Donations.AsQueryable().Select(DonationResponseModel.FromModel).ToList()
                 };
             }
         }
@@ -49,5 +50,7 @@
         public ICollection<string> Images { get; set; }
 
         public string CategoryName { get; set; }
+
+        public ICollection<DonationResponseModel> Donations { get; set; }
     }
 }

@@ -81,15 +81,5 @@
 		<!-- directives -->
 		<script src="app/directives/file-upload-directive.js"></script>
 		<script src="app/directives/project-list-item-directive.js"></script>
-		<script>
-			(function() {
-		PUBNUB.subscribe({
-		channel: 'new-project-added',
-		callback: function (message) {
-		toastr.success(message);
-		}
-		});
-		}());
-		</script>
 	</body>
 </html>

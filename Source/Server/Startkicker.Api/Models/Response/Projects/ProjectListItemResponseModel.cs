@@ -1,10 +1,11 @@
 ﻿namespace Startkicker.Api.Models.Response.Projects
 {
-    using Data.Models;
     using System;
     using System.Linq;
     using System.Linq.Expressions;
 
+    using Startkicker.Data.Models;
+    
     public class ProjectListItemResponseModel
     {
         public static Expression<Func<Project, ProjectListItemResponseModel>> FromModel
