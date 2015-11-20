@@ -5,15 +5,15 @@
 
     public interface ICategoriesService
     {
-        int Add(Category category);
+        int Add(string categoryName);
 
         IQueryable<Category> GetPage(int page = 1, int pageSize = 10);
 
-        Category GetById(int id);
+        IQueryable<Category> GetById(int id);
 
         IQueryable<Category> GetAll();
 
-        void Remove(Category category);
+        void Remove(int id);
 
         int Update(Category category);
     }

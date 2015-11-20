@@ -17,10 +17,10 @@
 				.post(url, category)
 				.then(function(response) {
 					var newCategory = {
-						name: category.name,
-						id: response.data
-					},
-					cachedCategories = getCachedCategories();
+							name: category.name,
+							id: response.data
+						},
+						cachedCategories = getCachedCategories();
 
 					cachedCategories.push(newCategory);
 					localStorage.setItem('categories', JSON.stringify(cachedCategories));
@@ -47,6 +47,25 @@
 			return deferred.promise;
 		}
 
+		function remove(id, index) {
+			var deferred = $q.defer();
+
+			$http
+				.delete(url + '/' + id)
+				.then(function(response) {
+					var cachedCategories = getCachedCategories();
+
+					cachedCategories.splice(index, 1);
+					localStorage.setItem('categories', JSON.stringify(cachedCategories));
+
+					deferred.resolve(response.data);
+				}, function(err) {
+					deferred.reject(err);
+				});
+
+			return deferred.promise;
+		}
+
 		function getCachedCategories() {
 			return JSON.parse(localStorage.getItem('categories'));
 		}
@@ -54,7 +73,8 @@
 		return {
 			add: add,
 			getAll: getAll,
-			getCachedCategories: getCachedCategories
+			getCachedCategories: getCachedCategories,
+			remove: remove
 		};
 	}
 }());

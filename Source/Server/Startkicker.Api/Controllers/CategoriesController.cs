@@ -8,6 +8,7 @@
     using Startkicker.Api.Models.Response.Categories;
     using Startkicker.Data.Models;
     using Startkicker.Services.Data.Contracts;
+    using System.Linq;
 
     public class CategoriesController : ApiController
     {
@@ -22,18 +23,17 @@
         [Authorize]
         public IHttpActionResult GetById(int id)
         {
-            var categoryDataModel = this.categories.GetById(id);
-            if (categoryDataModel != null)
+            var result = this.categories
+                .GetById(id)
+                .Select(CategoryDescriptionResponseModel.FromModel)
+                .FirstOrDefault();
+
+            if (result == null)
             {
-                var result = new CategoryDescriptionResponseModel
-                {
-                    Name = categoryDataModel.Name,
-                    Id = categoryDataModel.Id
-                };
-                return this.Ok(result);
+                return this.BadRequest("Category was not found!");
             }
 
-            return this.BadRequest("Category was not found!");
+            return this.Ok(result);
         }
 
         [HttpPost]
@@ -42,12 +42,7 @@
         [Authorize]
         public IHttpActionResult Add([FromBody]NewCategoryRequestModel categoryModel)
         {
-            var addedCategoryId = this.categories.Add(
-                new Category
-                {
-                    Name = categoryModel.Name,
-                    Projects = categoryModel.Projects
-                });
+            var addedCategoryId = this.categories.Add(categoryModel.Name);
 
             if (addedCategoryId == -1)
             {
@@ -81,6 +76,14 @@
             }
 
             return this.BadRequest("Categories were not found!");
+        }
+
+        [HttpDelete]
+        public IHttpActionResult Remove(int id)
+        {
+            this.categories.Remove(id);
+
+            return this.Ok("Category has been removed!");
         }
     }
 }

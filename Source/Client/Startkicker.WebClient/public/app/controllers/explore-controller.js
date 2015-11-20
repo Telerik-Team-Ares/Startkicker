@@ -11,6 +11,5 @@
 		var vm = this;
 
 		vm.categories = categories.getCachedCategories();
-
 	}
 }());
