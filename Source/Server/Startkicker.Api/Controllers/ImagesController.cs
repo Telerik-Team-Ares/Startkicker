@@ -44,7 +44,8 @@
             {
                 this.images.Remove(image);
                 return this.Ok();
-            } else
+            }
+            else
             {
                 return this.NotFound();
             }
