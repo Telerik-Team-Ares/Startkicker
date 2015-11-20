@@ -5,6 +5,7 @@
     using System.Linq.Expressions;
 
     using Startkicker.Data.Models;
+    using System.Linq;
 
     public class ProjectDescriptionResponseModel
     {
@@ -22,7 +23,9 @@
                     GoalMoney = pr.GoalMoney,
                     Innovator = pr.Innovator.UserName,
                     IsClosed = pr.IsClosed,
+                    Images = pr.Images.Select(im => im.ImageUrl).ToList(),
                     Id = pr.Id
+
                 };
             }
         }
@@ -41,11 +44,9 @@
 
         public int GoalMoney { get; set; }
 
-        public string InnovatorId { get; set; }
-
         public string Innovator { get; set; }
 
-        public ICollection<Image> Images { get; set; }
+        public ICollection<string> Images { get; set; }
 
         public string CategoryName { get; set; }
     }
